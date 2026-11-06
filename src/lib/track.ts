@@ -42,3 +42,18 @@ export function trackEvent(
 
   return event;
 }
+
+export const track = (event: string, payload?: Record<string, any>) => {
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`[Track] ${event}`, payload);
+  }
+
+  if (typeof window !== 'undefined') {
+    if ((window as any).fbq) {
+      (window as any).fbq('track', event, payload);
+    }
+    if ((window as any).dataLayer) {
+      (window as any).dataLayer.push({ event, ...payload });
+    }
+  }
+};
