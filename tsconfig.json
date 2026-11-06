@@ -25,5 +25,5 @@
     "noEmit": true
   },
   "include": ["src", "server.ts", "vite.config.ts"],
-  "exclude": ["node_modules", "dist", "supabase"]
+  "exclude": ["node_modules", "dist", "supabase", "src/start.ts", "src/server.ts", "src/router.tsx", "src/routeTree.gen.ts", "src/routes", "src/test", "vitest.config.ts"]
 }

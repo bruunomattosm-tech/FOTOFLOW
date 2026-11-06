@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "tsx server.ts",
+    "dev": "PORT=8080 tsx server.ts",
+    "build:dev": "vite build --mode development",
     "build": "vite build",
     "preview": "vite preview",
     "start": "tsx server.ts",
