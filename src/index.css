@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-violet: #8B5CF6;
+  --color-brand-purple: #A855F7;
+  --color-brand-green: #22C55E;
+  --color-brand-bg: #0A0A0F;
+  --color-brand-card: #14141C;
+  --color-brand-text: #F5F5F7;
+  --color-brand-muted: #A1A1AA;
+}
+
+:root {
+  --background: 240 10% 4%;
+  --foreground: 0 0% 98%;
+  --card: 240 10% 7%;
+  --card-foreground: 0 0% 98%;
+  --popover: 240 10% 7%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 263 70% 50%;
+  --primary-foreground: 210 20% 98%;
+  --secondary: 240 4% 16%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 240 4% 16%;
+  --muted-foreground: 240 5% 65%;
+  --accent: 240 4% 16%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 63% 31%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 4% 16%;
+  --input: 240 4% 16%;
+  --ring: 263 70% 50%;
+  --radius: 0.75rem;
+}
+
+body {
+  background-color: #0A0A0F;
+  color: #F5F5F7;
+}

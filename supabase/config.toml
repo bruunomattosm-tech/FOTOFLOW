@@ -1,0 +1,20 @@
+# O QUE FAZ: Configuração do projeto Supabase CLI e controle de validação de autenticação das Edge Functions.
+# ONDE EXECUTA: Supabase CLI ao executar `supabase functions deploy` ou `supabase start`.
+# O QUE FALTA CONFIGURAR: Preencher o `project_id` com o ID oficial do seu projeto no painel Supabase.
+
+project_id = "fotoflow-prod"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "storage"]
+
+[functions.pix-webhook]
+# CRÍTICO: Gateways bancários enviam webhooks sem token de usuário autenticado
+verify_jwt = false
+
+[functions.meta-capi]
+verify_jwt = false
+
+[functions.gerar-ensaio]
+verify_jwt = false
