@@ -66,6 +66,11 @@ export function Gallery() {
         .group:hover .animate-marquee, .group:hover .animate-marquee-reverse {
           animation-play-state: paused;
         }
+        @media (prefers-reduced-motion: reduce) {
+          .animate-marquee, .animate-marquee-reverse {
+            animation: none;
+          }
+        }
       `}</style>
     </section>
   );

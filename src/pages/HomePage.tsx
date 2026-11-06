@@ -1,3 +1,5 @@
+import { QuizProvider, useQuiz } from "@/context/QuizContext";
+import { QuizFlow } from "@/components/quiz/QuizFlow";
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -99,9 +101,11 @@ interface UploadedUserPhoto {
   originalSize: string;
 }
 
-export function HomePage() {
+export function HomePageInner() {
   // Gênero selecionado na Etapa 1
-  const [gender, setGender] = useState<'male' | 'female'>('male');
+
+  const { quizData, setGender } = useQuiz();
+  const gender = quizData.gender === 'female' ? 'female' : 'male';
 
   // Estado das referências (permite subir referências manualmente em memória)
   const [referencesState, setReferencesState] = useState<{
@@ -2200,3 +2204,21 @@ export function HomePage() {
 }
 
 export default HomePage;
+
+export function HomePage() {
+  return (
+    <QuizProvider>
+      <HomePageContainer />
+    </QuizProvider>
+  );
+}
+
+function HomePageContainer() {
+  const { quizData, completeQuiz } = useQuiz();
+
+  if (!quizData.completed) {
+    return <QuizFlow onComplete={completeQuiz} />;
+  }
+
+  return <HomePageInner />;
+}

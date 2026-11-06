@@ -42,6 +42,18 @@ export function Styles() {
 
   const handleSelectStyle = (styleId: string) => {
     track('SelectStyle', { style: styleId });
+    // Pré-selecionar no localStorage para que o quiz pegue o estilo
+    try {
+      const existingStr = localStorage.getItem('fotoflow_quiz_data');
+      let existing = { gender: null, styleId: styleId, completed: false } as any;
+      if (existingStr) {
+        existing = JSON.parse(existingStr);
+      }
+      existing.styleId = styleId;
+      localStorage.setItem('fotoflow_quiz_data', JSON.stringify(existing));
+    } catch (e) {
+      console.error('Failed to set styleId in localStorage', e);
+    }
     navigate('/app');
   };
 
@@ -62,7 +74,7 @@ export function Styles() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
           {stylesList.map((style, idx) => (
             <motion.div
               key={style.id}
@@ -72,7 +84,7 @@ export function Styles() {
               transition={{ delay: idx * 0.1 }}
               onClick={() => handleSelectStyle(style.id)}
               className={`group relative overflow-hidden rounded-[20px] bg-[#14141C] border border-white/5 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:border-[#8B5CF6] hover:shadow-[0_0_30px_rgba(139,92,246,0.15)] ${
-                idx === 0 || idx === 1 ? 'lg:col-span-3 lg:w-[calc(50%-12px)] lg:inline-flex lg:mr-6 last:mr-0' : '' // make first 2 larger/half width on desktop if wanted, or just use standard grid
+                idx === 0 || idx === 1 ? ' ' : ''
               } aspect-[4/5] md:aspect-auto md:h-[400px]`}
               style={idx < 2 ? { gridColumn: 'auto' } : {}}
             >
