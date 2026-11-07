@@ -55,7 +55,7 @@
   color: inherit;
 }
 .ff-theme .ff-action {
-  background: transparent;
+  background: var(--ff-card);
   color: var(--ff-text);
   height: auto;
   min-height: 0;
@@ -74,7 +74,8 @@
   outline-offset: 3px;
 }
 .ff-theme .ff-action:disabled {
-  opacity: 0.4;
+  opacity: 1;
+  color: var(--ff-muted);
 }
 .ff-theme .ff-logo {
   display: flex;
