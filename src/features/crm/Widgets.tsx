@@ -1,3 +1,6 @@
+import { CountryBadge } from '@/features/international/CountrySelector';
+import { whatsappUrl } from '@/features/international/recovery';
+import { money } from '@/lib/i18n';
 import type { ReactNode } from "react";
 import { MessageCircle } from "lucide-react";
 import { FUNNEL } from "./sampleData";
@@ -60,11 +63,10 @@ export function WhatsApp({
   message?: string;
   children?: ReactNode;
 }) {
-  const phone = lead.phone.replace(/\D/g, "");
   return (
     <a
       className="ff-small ff-wa"
-      href={`https://wa.me/${phone.startsWith("55") ? phone : `55${phone}`}?text=${encodeURIComponent(message || `Oi, ${lead.name.split(" ")[0]}! Seu ensaio FotoFlow está aguardando você.`)}`}
+      href={whatsappUrl(lead, message)}
       target="_blank"
       rel="noreferrer"
       onClick={(e) => e.stopPropagation()}
@@ -98,7 +100,8 @@ export function LeadTable({ leads, open }: { leads: CrmLead[]; open: (id: string
               }}
             >
               <td>
-                <b>{l.name}</b>
+                <div className="ff-inline-badge"><b>{l.name}</b><CountryBadge country={l.country} /></div>
+                {l.orderCents !== undefined && <small>{money(l.orderCents, l.country || "BR")}</small>}
                 <br />
                 <small>
                   {l.gender === "female" ? "Mulher" : "Homem"} · {l.city}

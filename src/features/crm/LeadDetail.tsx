@@ -1,3 +1,8 @@
+import { CountryBadge } from '@/features/international/CountrySelector';
+import { recoveryMessage } from '@/features/international/recovery';
+import { money } from '@/lib/i18n';
+import type { InternationalConfig } from '@/features/international/types';
+import type { CrmOrder } from '@/features/shared/types';
 import { useEffect, useState } from "react";
 import { apiService } from "@/lib/api";
 import { Action, Back } from "../shared/Controls";
@@ -5,20 +10,20 @@ import { RETENTION_MS, styleName } from "../shared/catalog";
 import type { CrmLead } from "../shared/types";
 import { Panel, WhatsApp } from "./Widgets";
 export function LeadDetail({
-  lead,
+  lead, orders, config,
   back,
   refresh,
 }: {
-  lead: CrmLead;
+  lead: CrmLead; orders: CrmOrder[]; config: InternationalConfig;
   back: () => void;
   refresh: () => Promise<void>;
 }) {
   const [now, setNow] = useState(Date.now());
   const [note, setNote] = useState(lead.note);
   const [saved, setSaved] = useState(false);
-  const [message, setMessage] = useState(
-    `Oi, ${lead.name.split(" ")[0]}! Seu ensaio ${styleName(lead.style).toLowerCase()} ficou pronto e está lindo ✨ Ele fica guardado por 24h. Quer que eu reenvie o PIX?`,
-  );
+  const order = orders.find(o => o.leadId ? o.leadId === lead.id : o.name === lead.name);
+  const suggested = recoveryMessage(lead, config[lead.country || "BR"].message, order?.cents);
+  const [message, setMessage] = useState(suggested);
   useEffect(() => {
     const timer = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(timer);
@@ -48,7 +53,7 @@ export function LeadDetail({
             .join("")}
         </div>
         <div>
-          <h1>{lead.name}</h1>
+          <h1>{lead.name} <CountryBadge country={lead.country} /></h1>
           <span className={`ff-pill ${lead.tone}`}>
             {lead.stage} · {lead.activity}
           </span>
@@ -56,7 +61,7 @@ export function LeadDetail({
             {lead.phone} · {lead.email} · {lead.city}
           </p>
         </div>
-        <WhatsApp lead={lead}>Chamar no WhatsApp</WhatsApp>
+        <WhatsApp lead={lead} message={suggested}>Chamar no WhatsApp</WhatsApp>
       </div>
       <div className="crm-side">
         <div>
@@ -95,12 +100,13 @@ export function LeadDetail({
         </div>
         <div>
           <Panel title="Checkout em aberto">
+            {order && <p className="ff-sub">{money(order.cents, lead.country || "BR")}</p>}
             <h2>{lead.tone === "success" ? "Pagamento confirmado" : "Aguardando pagamento"}</h2>
             <WhatsApp
               lead={lead}
-              message={`Oi, ${lead.name.split(" ")[0]}! Vamos retomar seu pedido PIX no FotoFlow?`}
+              message={suggested}
             >
-              Reenviar PIX
+              Retomar pagamento
             </WhatsApp>
           </Panel>
           <Panel title="Mensagem sugerida">

@@ -1,3 +1,5 @@
+import { Config } from '@/components/crm/Config';
+import type { InternationalConfig } from '@/features/international/types';
 import { useState } from "react";
 import { apiService } from "@/lib/api";
 import type { BusinessSettings } from "../shared/types";
@@ -6,8 +8,9 @@ import { AISettings } from "../shared/AISettings";
 import { Panel } from "./Widgets";
 export function SettingsPage({
   settings,
-  refresh,
+  refresh, config,
 }: {
+  config: InternationalConfig;
   settings: BusinessSettings;
   refresh: () => Promise<void>;
 }) {
@@ -33,6 +36,13 @@ export function SettingsPage({
   }
   return (
     <>
+      <Panel
+        title="Configurações de IA"
+        subtitle="WaveSpeed AI · Nano Banana 2.1 · GPT 2.5 Flare · Sunburst"
+      >
+        <AISettings />
+      </Panel>
+      <Config config={config} refresh={refresh} />
       <div className="crm-settings-save">
         <Action
           className="ff-primary"
@@ -139,12 +149,7 @@ export function SettingsPage({
           </label>
         </Panel>
       </div>
-      <Panel
-        title="Configurações de IA"
-        subtitle="WaveSpeed AI · Nano Banana 2.1 · GPT 2.5 Flare · Sunburst"
-      >
-        <AISettings />
-      </Panel>
+
     </>
   );
 }

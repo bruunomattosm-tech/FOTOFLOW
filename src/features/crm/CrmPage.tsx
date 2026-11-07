@@ -1,3 +1,4 @@
+import { TrackingSettings } from '@/components/crm/TrackingSettings';
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
@@ -23,6 +24,7 @@ import { LibraryPage } from "./LibraryPage";
 import { SettingsPage } from "./SettingsPage";
 import "../shared/prototype.css";
 const NAV = [
+  { id: "tracking", label: "Pixel & Rastreamento", icon: ChartNoAxesCombined, title: "Pixel & Rastreamento", sub: "Configuração por país e eventos desta sessão." },
   {
     id: "visao",
     label: "Visão geral",
@@ -46,9 +48,9 @@ const NAV = [
   },
   {
     id: "pedidos",
-    label: "Pedidos PIX",
+    label: "Pedidos",
     icon: CreditCard,
-    title: "Pedidos PIX",
+    title: "Pedidos",
     sub: "Pagamentos confirmados, pendentes e expirados.",
   },
   {
@@ -163,18 +165,19 @@ export default function CrmPage() {
             </Action>
           )}
         </header>
-        {page === "visao" && <Overview leads={d.leads} open={open} go={() => go("leads")} />}
+        {page === "visao" && <Overview orders={d.orders} config={d.international} leads={d.leads} open={open} go={() => go("leads")} />}
         {page === "leads" && <LeadsPage leads={d.leads} open={open} />}
         {page === "lead" &&
           (lead ? (
-            <LeadDetail key={lead.id} lead={lead} back={() => go("leads")} refresh={d.refresh} />
+            <LeadDetail config={d.international} orders={d.orders} key={lead.id} lead={lead} back={() => go("leads")} refresh={d.refresh} />
           ) : (
             <p className="ff-sub">Lead não encontrado.</p>
           ))}
         {page === "funil" && <FunnelPage />}
-        {page === "pedidos" && <OrdersPage orders={d.orders} leads={d.leads} />}
+        {page === "pedidos" && <OrdersPage config={d.international} orders={d.orders} leads={d.leads} />}
         {page === "biblioteca" && <LibraryPage references={d.references} refresh={d.refresh} />}
-        {page === "config" && <SettingsPage key={JSON.stringify(d.settings)} settings={d.settings} refresh={d.refresh} />}
+        {page === "tracking" && <TrackingSettings />}
+        {page === "config" && <SettingsPage config={d.international} key={JSON.stringify(d.settings)} settings={d.settings} refresh={d.refresh} />}
       </main>
     </div>
   );
