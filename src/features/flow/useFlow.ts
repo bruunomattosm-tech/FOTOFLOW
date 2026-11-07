@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useGeneration } from "./useGeneration";
+import { useEffect, useState } from "react";
 import { apiService } from "@/lib/api";
 import type { Ensaio } from "@/types/domain";
 import { canSelectReference, remainingPhotos } from "../shared/catalog";
@@ -23,7 +24,6 @@ export function useFlow() {
   const [status, setStatus] = useState("Analisando suas fotos…");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
-  const generation = useRef(false);
   const refs = data.references.filter((r) => r.style === style && r.gender === gender && r.active);
   const go = (next: FlowStep) => {
     setError("");
@@ -89,64 +89,7 @@ export function useFlow() {
     setCustomer(next);
     await apiService.prototype.saveLead(next);
   }
-  useEffect(() => {
-    if ((step !== "gen" && step !== "gen2") || generation.current || !customer) return;
-    generation.current = true;
-    let active = true;
-    setPercent(0);
-    setStatus("Analisando suas fotos…");
-    const ids = step === "gen2" ? selected : [referenceId];
-    async function generate() {
-      try {
-        const generated: Ensaio[] = [];
-        for (const [index, id] of ids.entries()) {
-          const ref = data.references.find((r) => r.id === id);
-          if (!ref) throw new Error("Referência indisponível. Volte e escolha outra.");
-          const result = await apiService.gerarEnsaio({
-            leadId: customer.id,
-            estiloId: style,
-            referenciaId: id,
-            referenceImage: ref.image,
-            userImages: photos,
-            gender,
-            model: localStorage.getItem("fotoflow_model") || "nano-banana-2.1",
-            resolution:
-              localStorage.getItem("fotoflow_resolution") === "4K"
-                ? "4K"
-                : localStorage.getItem("fotoflow_resolution") === "2K"
-                  ? "2K"
-                  : "1K",
-            onProgress: (message, pct = 0) => {
-              if (active) {
-                setPercent(Math.round((index * 100 + pct) / ids.length));
-                setStatus(message);
-              }
-            },
-          });
-          generated.push(result);
-        }
-        if (!active) return;
-        const all = step === "gen2" ? [...results, ...generated] : generated;
-        setResults(all);
-        setPercent(100);
-        await updateCustomer(
-          step === "gen2" ? "Concluído" : "Gerou ensaio",
-          step === "gen2" ? 100 : 75,
-          step === "gen2" ? "success" : "warning",
-          all.map((r) => r.urlFinal || r.urlPreview || "").filter(Boolean),
-        );
-        setStep(step === "gen2" ? "final" : "result");
-      } catch (e: unknown) {
-        if (active) setError(e instanceof Error ? e.message : "Falha na geração.");
-      } finally {
-        generation.current = false;
-      }
-    }
-    void generate();
-    return () => {
-      active = false;
-    };
-  }, [step]);
+  useGeneration({ step,customerId:customer?.id,selected,referenceId,references:data.references,style,photos,gender,results,setPercent,setStatus,setResults,setStep,setError,updateCustomer });
   async function createOrder() {
     if (!pack || !customer) return;
     setBusy(true);
