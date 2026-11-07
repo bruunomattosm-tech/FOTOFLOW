@@ -2,7 +2,7 @@
 # ONDE EXECUTA: Supabase CLI ao executar `supabase functions deploy` ou `supabase start`.
 # O QUE FALTA CONFIGURAR: Preencher o `project_id` com o ID oficial do seu projeto no painel Supabase.
 
-project_id = "fotoflow-prod"
+project_id = "ahqtyjbidjiembqoxphy"
 
 [api]
 enabled = true
