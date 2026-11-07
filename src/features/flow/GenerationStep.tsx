@@ -16,7 +16,7 @@ export function GenerationStep({
         {percent}%
       </div>
       <progress className="ff-progress" max={100} value={percent} />
-      <p className="ff-sub">{status}</p>
+      <p className="ff-sub">{t(status)}</p>
       <div className="ff-notice warning">
         {t("⚠ Não saia desta página. Seu ensaio está quase pronto.")}
       </div>

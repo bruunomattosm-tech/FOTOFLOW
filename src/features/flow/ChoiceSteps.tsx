@@ -4,6 +4,7 @@ import { STYLES } from "../shared/catalog";
 import type { useFlow } from "./useFlow";
 import type { ReactNode } from "react";
 export function ChoiceSteps({ f, cta }: { f: ReturnType<typeof useFlow>; cta: (text: string, action: () => void, disabled?: boolean) => ReactNode }) {
+ const { t, locale } = useLocale();
  return <>
         {f.step === "gender" && (
           <>
@@ -22,7 +23,7 @@ export function ChoiceSteps({ f, cta }: { f: ReturnType<typeof useFlow>; cta: (t
                   <span className="ff-option-icon">{g === "female" ? "👩" : "👨"}</span>
                   <div>
                     <b>{g === "female" ? t("Mulher") : t("Homem")}</b>
-                    <span>Ver estilos {g === "female" ? t("femininos") : t("masculinos")}</span>
+                    <span>{t("Ver estilos")} {g === "female" ? t("femininos") : t("masculinos")}</span>
                   </div>
                 </Action>
               ))}
@@ -46,8 +47,8 @@ export function ChoiceSteps({ f, cta }: { f: ReturnType<typeof useFlow>; cta: (t
                 >
                   <span className="ff-option-icon">{s.icon}</span>
                   <div>
-                    <b>{s.title}</b>
-                    <span>{s.description}</span>
+                    <b>{t(s.title)}</b>
+                    <span>{t(s.description)}</span>
                   </div>
                 </Action>
               ))}
@@ -56,7 +57,7 @@ export function ChoiceSteps({ f, cta }: { f: ReturnType<typeof useFlow>; cta: (t
         )}
         {f.step === "refs" && (
           <>
-            <h1>{STYLES.find((s) => s.id === f.style)?.title}</h1>
+            <h1>{t(STYLES.find((s) => s.id === f.style)?.title || "")}</h1>
             <p className="ff-sub">{t("Toque na referência que mais combina com você.")}</p>
             <ReferenceGrid refs={f.refs} selected={[f.referenceId]} onSelect={f.setReferenceId} />
             {!f.refs.length && <p className="ff-sub">{t("Nenhuma referência ativa neste estilo.")}</p>}

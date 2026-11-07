@@ -1,3 +1,6 @@
+import { LocaleProvider } from '@/context/LocaleContext';
+import { ConsentPanel } from '@/features/tracking/ConsentPanel';
+import { PrivacyPage } from '@/features/tracking/PrivacyPage';
 import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HomePage } from "@/pages/HomePage";
@@ -17,13 +20,14 @@ export default function App() {
     };
   }, []);
   return (
-    <BrowserRouter>
+    <LocaleProvider><BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/app" element={<FlowPage />} />
         <Route path="/crm" element={<CrmPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/studio" element={<HomePage />} />
       </Routes>
-    </BrowserRouter>
+    <ConsentPanel /></BrowserRouter></LocaleProvider>
   );
 }

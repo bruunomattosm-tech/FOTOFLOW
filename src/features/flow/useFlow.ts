@@ -1,3 +1,6 @@
+import { useLocale } from '@/context/LocaleContext';
+import { internationalPhone } from '@/lib/i18n';
+import { trackEvent } from '@/lib/track';
 import { useGeneration } from "./useGeneration";
 import { useEffect, useState } from "react";
 import { apiService } from "@/lib/api";
@@ -8,6 +11,8 @@ import { validLead, type LeadForm } from "./LeadStep";
 import { usePrototype } from "../shared/usePrototype";
 export function useFlow() {
   const data = usePrototype();
+  const { country, locale } = useLocale();
+  const countryConfig = data.international[country];
   const [step, setStep] = useState<FlowStep>("gender");
   const [gender, setGender] = useState<Gender>("female");
   const [style, setStyle] = useState<StyleId>("corp");
@@ -47,7 +52,8 @@ export function useFlow() {
       const item: CrmLead = {
         id: saved.id,
         name: lead.name.trim(),
-        phone: lead.phone,
+        phone: internationalPhone(lead.phone, country),
+        country, currency: locale.currency, subdomain: location.hostname,
         email: lead.email,
         gender,
         style,
@@ -63,6 +69,7 @@ export function useFlow() {
       };
       await apiService.prototype.saveLead(item);
       setCustomer(item);
+      trackEvent("Lead", { country }, item.id);
       go("gen");
     } catch {
       setError("Não foi possível salvar. Tente novamente.");
@@ -94,12 +101,12 @@ export function useFlow() {
     if (!pack || !customer) return;
     setBusy(true);
     try {
-      const order = await apiService.criarPedido(customer.id, pack.id);
+      const order = country === "BR" ? await apiService.criarPedido(customer.id, pack.id) : { id: crypto.randomUUID(), pixCopiaECola: "" };
       setOrderId(order.id);
       setPixCode(order.pixCopiaECola || "PIX de demonstração");
       await apiService.prototype.saveOrder({
         id: order.id,
-        name: customer.name,
+        name: customer.name, leadId: customer.id, country, currency: locale.currency, subdomain: location.hostname,
         count: pack.count,
         cents: pack.cents,
         status: "Pendente",
@@ -111,6 +118,7 @@ export function useFlow() {
         "warning",
         results.map((r) => r.urlFinal || "").filter(Boolean),
       );
+      trackEvent("InitiateCheckout", { value: pack.cents / 100, currency: locale.currency, country, transaction_id: order.id }, customer.id);
       go("pix");
     } catch {
       setError("Não foi possível criar o pedido. Tente novamente.");
@@ -127,6 +135,7 @@ export function useFlow() {
       "success",
       results.map((r) => r.urlFinal || "").filter(Boolean),
     );
+    trackEvent("Purchase", { value: (pack?.cents || 0) / 100, currency: locale.currency, country, transaction_id: orderId, demo: true }, customer?.id);
     go("paid");
   }
   useEffect(() => {
@@ -144,7 +153,8 @@ export function useFlow() {
   }
   const remaining = remainingPhotos(pack?.count || 3);
   return {
-    ...data,
+    ...data, country, countryConfig,
+    settings: { ...data.settings, packages: countryConfig.packages },
     step,
     go,
     gender,

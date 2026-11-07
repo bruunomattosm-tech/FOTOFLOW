@@ -1,9 +1,13 @@
+import { CountrySelector } from '@/features/international/CountrySelector';
+import { InternationalCheckout } from '@/features/international/InternationalCheckout';
+import { useFlowTracking } from '@/features/tracking/useFlowTracking';
+import { money } from '@/lib/i18n';
 import { useLocale } from '@/context/LocaleContext';
 import { ChoiceSteps } from "./ChoiceSteps";
 import { Sparkles, ArrowRight } from "lucide-react";
 import { Action, Back, ReferenceGrid } from "../shared/Controls";
 import { AISettings } from "../shared/AISettings";
-import { formatMoney, STEPS } from "../shared/catalog";
+import { STEPS } from "../shared/catalog";
 import { CaptureStep } from "./CaptureStep";
 import { LeadStep } from "./LeadStep";
 import { GenerationStep } from "./GenerationStep";
@@ -14,6 +18,7 @@ import "../shared/prototype.css";
 export default function FlowPage() {
  const { t } = useLocale();
   const f = useFlow();
+  useFlowTracking(f);
   const index = STEPS.indexOf(f.step);
   const url = f.results[0]?.urlFinal || f.photos[0] || "";
   const previous = {
@@ -28,7 +33,7 @@ export default function FlowPage() {
   const back = f.step in previous ? previous[f.step as keyof typeof previous] : undefined;
   const cta = (text: string, action: () => void, disabled = false) => (
     <Action className="ff-cta" disabled={disabled || f.busy} onClick={action}>
-      {f.busy ? t("Aguarde…") : text}
+      {f.busy ? t("Aguarde…") : t(text)}
       <ArrowRight size={18} />
     </Action>
   );
@@ -41,7 +46,7 @@ export default function FlowPage() {
             FotoFlow
           </a>
           <div className="ff-row ff-header-actions">
-            <AISettings compact />
+            <CountrySelector /><AISettings compact />
             <span>{index + 1}/13</span>
           </div>
         </header>
@@ -56,7 +61,7 @@ export default function FlowPage() {
         )}
         {f.step === "lead" && (
           <>
-            <LeadStep lead={f.lead} onChange={f.setLead} error={f.error} />
+            <LeadStep lead={f.lead} onChange={f.setLead} error={t(f.error)} />
             {cta("Começar a criar", () => {
               void f.saveLead();
             })}
@@ -67,7 +72,7 @@ export default function FlowPage() {
             <GenerationStep batch={f.step === "gen2"} percent={f.percent} status={f.status} />
             {f.error && (
               <div className="ff-notice danger" role="alert">
-                {f.error}
+                {t(f.error)}
                 <Action
                   className="ff-small"
                   onClick={() => f.go(f.step === "gen" ? "lead" : "batch")}
@@ -102,14 +107,14 @@ export default function FlowPage() {
                   onClick={() => f.setPack(p)}
                 >
                   {p.count === 6 && <span className="ff-tag">{t("RECOMENDADO")}</span>}
-                  <strong>{formatMoney(p.cents)}</strong>
-                  <b>{p.count} fotos</b>
-                  <span>{p.count - 1} novas para criar com as referências que você escolher</span>
+                  <strong>{money(p.cents, f.country)}</strong>
+                  <b>{p.count} {t("fotos")}</b>
+                  <span>{p.count - 1} {t("novas para criar com as referências que você escolher")}</span>
                 </Action>
               ))}
             </div>
             {cta(
-              "Pagar com PIX",
+              f.country === "BR" ? "Pagar com PIX" : f.country === "US" ? "Continue to payment" : "Continuar al pago",
               () => {
                 void f.createOrder();
               },
@@ -119,7 +124,7 @@ export default function FlowPage() {
         )}
         {f.step === "pix" && f.pack && (
           <>
-            <PixStep pack={f.pack} code={f.pixCode} />
+            {f.country === "BR" ? <PixStep pack={f.pack} code={f.pixCode} /> : <InternationalCheckout pack={f.pack} />}
             {cta("Simular pagamento confirmado", () => {
               void f.confirmPayment();
             })}
@@ -132,9 +137,9 @@ export default function FlowPage() {
             <Photo url={url} />
             <DownloadButton url={url} index={0} onError={f.setError} />
             <p className="ff-sub ff-space">
-              Você ainda tem {f.remaining} fotos para criar neste pacote.
+              {t("Você ainda tem")} {f.remaining} {t("fotos para criar neste pacote.")}
             </p>
-            {cta(`Criar as ${f.remaining} imagens restantes`, () => {
+            {cta(`${t("Criar meu ensaio")} · ${f.remaining}`, () => {
               f.setSelected([]);
               f.go("batch");
             })}
@@ -143,17 +148,17 @@ export default function FlowPage() {
         {f.step === "batch" && (
           <>
             <h1>{t("Escolha as referências")}</h1>
-            <p className="ff-sub">Selecione {f.remaining} para criar tudo de uma vez.</p>
+            <p className="ff-sub">{t("Selecione")} {f.remaining} {t("para criar tudo de uma vez.")}</p>
             <div className="ff-count">
               <span>{t("Selecionadas")}</span>
               <b>
-                {f.selected.length} de {f.remaining}
+                {f.selected.length} {t("de")} {f.remaining}
               </b>
             </div>
             <ReferenceGrid refs={f.refs} selected={f.selected} onSelect={f.toggle} />
             {cta(
               f.selected.length < f.remaining
-                ? `Faltam ${f.remaining - f.selected.length}`
+                ? `${t("Faltam")} ${f.remaining - f.selected.length}`
                 : "Criar meu ensaio",
               () => f.go("gen2"),
               f.selected.length !== f.remaining,
@@ -163,7 +168,7 @@ export default function FlowPage() {
         {f.step === "final" && (
           <>
             <h1>{t("Seu ensaio completo")}</h1>
-            <p className="ff-sub">{f.results.length} fotos prontas para baixar.</p>
+            <p className="ff-sub">{f.results.length} {t("fotos prontas para baixar.")}</p>
             <div className="ff-reference-grid">
               {f.results.map((r, i) => (
                 <div key={r.id}>
@@ -183,7 +188,7 @@ export default function FlowPage() {
         )}
         {f.error && !["lead", "gen", "gen2"].includes(f.step) && (
           <p className="ff-danger" role="alert">
-            {f.error}
+            {t(f.error)}
           </p>
         )}
         <div className="ff-mode-label">{t("Modo demonstração")}</div>

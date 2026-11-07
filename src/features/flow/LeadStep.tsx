@@ -17,6 +17,7 @@ export function LeadStep({
   onChange: (lead: LeadForm) => void;
   error: string;
 }) {
+ const { t, locale } = useLocale();
   return (
     <>
       <h1>{t("Quase lá!")}</h1>
@@ -25,7 +26,7 @@ export function LeadStep({
       </p>
       {(["name", "phone", "email"] as const).map((field) => (
         <label className="ff-label" key={field}>
-          {{ name: "Nome", phone: "Telefone (WhatsApp)", email: t("E-mail") }[field]}
+          {t({ name: "Nome", phone: "Telefone (WhatsApp)", email: "E-mail" }[field])}
           <input
             className="ff-input"
             type={field === "phone" ? "tel" : field === "email" ? "email" : "text"}
@@ -33,7 +34,7 @@ export function LeadStep({
             value={lead[field]}
             onChange={(e) => onChange({ ...lead, [field]: e.target.value })}
             placeholder={
-              { name: "Seu nome", phone: "(11) 98765-4321", email: "voce@email.com" }[field]
+              { name: t("Seu nome"), phone: locale.phone, email: "you@email.com" }[field]
             }
           />
         </label>

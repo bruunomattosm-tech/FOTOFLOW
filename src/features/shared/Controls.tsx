@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Check, ArrowLeft } from "lucide-react";
 import type { FlowReference } from "./types";
 export function Action({ className = "", ...props }: ButtonProps) {
- const { t } = useLocale();
   return <Button variant="ghost" className={`ff-action ${className}`} {...props} />;
 }
 export function Back({ onClick }: { onClick: () => void }) {
+ const { t } = useLocale();
   return (
     <Action className="ff-back" onClick={onClick}>
       <ArrowLeft size={15} /> {t("Voltar")}
