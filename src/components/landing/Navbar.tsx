@@ -1,3 +1,4 @@
+import { CountrySelector } from '@/features/international/CountrySelector';
 import { useLocale } from '@/context/LocaleContext';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -21,7 +22,7 @@ export function Navbar() {
 
   const handleCTA = () => {
     track('ClickCTA', { location: 'Navbar' });
-    navigate('/app');
+    navigate('/app' + location.search);
   };
 
   const navLinks = [
@@ -55,15 +56,16 @@ export function Navbar() {
           </span>
         </div>
 
+        <div className="ff-theme"><CountrySelector /></div>
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <button
-              key={link.label}
+              key={t(link.label)}
               onClick={() => handleScrollTo(link.href)}
               className="text-sm text-[#A1A1AA] hover:text-[#F5F5F7] transition-colors"
             >
-              {link.label}
+              {t(link.label)}
             </button>
           ))}
         </nav>
@@ -98,11 +100,11 @@ export function Navbar() {
           >
             {navLinks.map((link) => (
               <button
-                key={link.label}
+                key={t(link.label)}
                 onClick={() => handleScrollTo(link.href)}
                 className="text-left text-[#F5F5F7] text-lg font-medium"
               >
-                {link.label}
+                {t(link.label)}
               </button>
             ))}
             <button

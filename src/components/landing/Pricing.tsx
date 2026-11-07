@@ -1,3 +1,5 @@
+import { usePrototype } from '@/features/shared/usePrototype';
+import { money } from '@/lib/i18n';
 import { useLocale } from '@/context/LocaleContext';
 import React from 'react';
 import { motion } from 'framer-motion';
@@ -30,12 +32,13 @@ const plans = [
 ];
 
 export function Pricing() {
- const { t } = useLocale();
+ const { t, country } = useLocale();
+ const { international } = usePrototype();
   const navigate = useNavigate();
 
   const handleCTA = (planName: string) => {
     track('ClickCTA', { location: 'Pricing', plan: planName });
-    navigate('/app');
+    navigate('/app' + location.search);
   };
 
   return (
@@ -70,16 +73,16 @@ export function Pricing() {
                 </div>
               )}
 
-              <h3 className="text-2xl font-bold text-[#F5F5F7] mb-2">{plan.photos}</h3>
+              <h3 className="text-2xl font-bold text-[#F5F5F7] mb-2">{international[country].packages[idx]?.count} {t("fotos")}</h3>
               <div className="mb-6 flex items-baseline gap-1">
-                <span className="text-4xl font-bold text-[#22C55E]">{plan.price}</span>
+                <span className="text-4xl font-bold text-[#22C55E]">{money(international[country].packages[idx]?.cents || 0, country)}</span>
               </div>
 
               <ul className="space-y-4 mb-8 flex-grow">
                 {plan.features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-3 text-[#A1A1AA]">
                     <Check size={20} className="text-[#8B5CF6] shrink-0 mt-0.5" />
-                    <span>{feature}</span>
+                    <span>{t(feature)}</span>
                   </li>
                 ))}
               </ul>

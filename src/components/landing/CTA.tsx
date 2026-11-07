@@ -10,7 +10,7 @@ export function CTA() {
 
   const handleCTA = () => {
     track('ClickCTA', { location: 'FooterCTA' });
-    navigate('/app');
+    navigate('/app' + location.search);
   };
 
   return (

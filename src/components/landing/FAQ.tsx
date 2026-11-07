@@ -6,27 +6,27 @@ import { ChevronDown } from 'lucide-react';
 const faqs = [
   {
     question: 'Preciso saber posar?',
-    answer: t("Não! Nossa IA analisa suas selfies e aplica a pose ideal para cada estilo, corrigindo postura, ombros e inclinação do rosto para um resultado perfeitamente natural.")
+    answer: "Não! Nossa IA analisa suas selfies e aplica a pose ideal para cada estilo, corrigindo postura, ombros e inclinação do rosto para um resultado perfeitamente natural."
   },
   {
     question: 'Minhas fotos ficam armazenadas?',
-    answer: t("Suas selfies originais são deletadas automaticamente após a geração do ensaio. As fotos finais ficam disponíveis por 30 dias para você baixar, e depois são apagadas.")
+    answer: "Suas selfies originais são deletadas automaticamente após a geração do ensaio. As fotos finais ficam disponíveis por 30 dias para você baixar, e depois são apagadas."
   },
   {
     question: 'Quanto tempo demora?',
-    answer: t("O processo todo, desde o envio das selfies até a entrega das fotos em alta resolução, leva em média 2 minutos.")
+    answer: "O processo todo, desde o envio das selfies até a entrega das fotos em alta resolução, leva em média 2 minutos."
   },
   {
     question: 'Posso usar comercialmente?',
-    answer: t("Sim! Ao adquirir qualquer pacote, você recebe licença completa para usar as fotos no LinkedIn, site da sua empresa, Instagram, materiais impressos e campanhas.")
+    answer: "Sim! Ao adquirir qualquer pacote, você recebe licença completa para usar as fotos no LinkedIn, site da sua empresa, Instagram, materiais impressos e campanhas."
   },
   {
     question: 'E se eu não gostar do resultado?',
-    answer: t("A visualização do ensaio gerado é totalmente gratuita com marca d'água. Você só paga se gostar do resultado e decidir baixar as fotos em alta resolução.")
+    answer: "A visualização do ensaio gerado é totalmente gratuita com marca d'água. Você só paga se gostar do resultado e decidir baixar as fotos em alta resolução."
   },
   {
     question: 'Como recebo as fotos?',
-    answer: t("Assim que o pagamento for aprovado, o download em alta resolução (4K) é liberado imediatamente na própria plataforma, sem complicação.")
+    answer: "Assim que o pagamento for aprovado, o download em alta resolução (4K) é liberado imediatamente na própria plataforma, sem complicação."
   }
 ];
 
@@ -62,7 +62,7 @@ export function FAQ() {
                 className="w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B5CF6]"
                 aria-expanded={openIndex === idx}
               >
-                <span className="text-[#F5F5F7] font-medium pr-4">{faq.question}</span>
+                <span className="text-[#F5F5F7] font-medium pr-4">{t(faq.question)}</span>
                 <ChevronDown
                   className={`text-[#A1A1AA] transition-transform duration-300 shrink-0 ${openIndex === idx ? 'rotate-180' : ''}`}
                   size={20}
@@ -78,7 +78,7 @@ export function FAQ() {
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                   >
                     <div className="px-6 pb-5 pt-0 text-[#A1A1AA] leading-relaxed">
-                      {faq.answer}
+                      {t(faq.answer)}
                     </div>
                   </motion.div>
                 )}

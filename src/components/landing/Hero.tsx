@@ -21,7 +21,7 @@ export function Hero() {
 
   const handleCTA = () => {
     track('ClickCTA', { location: 'Hero' });
-    navigate('/app');
+    navigate('/app' + location.search);
   };
 
   return (

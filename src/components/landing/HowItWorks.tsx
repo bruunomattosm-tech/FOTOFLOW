@@ -6,22 +6,22 @@ const steps = [
   {
     num: '01',
     title: 'Escolha o estilo',
-    desc: t("De perfis executivos a ensaios lifestyle. Selecione o que mais combina com você.")
+    desc: "De perfis executivos a ensaios lifestyle. Selecione o que mais combina com você."
   },
   {
     num: '02',
     title: 'Selecione as referências',
-    desc: t("Navegue por nossa galeria e escolha as poses e cenários exatos que deseja.")
+    desc: "Navegue por nossa galeria e escolha as poses e cenários exatos que deseja."
   },
   {
     num: '03',
     title: 'Tire 4 fotos guiadas',
-    desc: t("Use a câmera do celular. Nossa IA guia você para as melhores poses e iluminação.")
+    desc: "Use a câmera do celular. Nossa IA guia você para as melhores poses e iluminação."
   },
   {
     num: '04',
     title: 'Receba seu ensaio',
-    desc: t("Em até 2 minutos, suas fotos profissionais estarão prontas para download.")
+    desc: "Em até 2 minutos, suas fotos profissionais estarão prontas para download."
   }
 ];
 
@@ -60,8 +60,8 @@ export function HowItWorks() {
                   {step.num}
                 </span>
               </div>
-              <h3 className="text-xl font-bold text-[#F5F5F7] mb-3">{step.title}</h3>
-              <p className="text-[#A1A1AA] leading-relaxed max-w-xs">{step.desc}</p>
+              <h3 className="text-xl font-bold text-[#F5F5F7] mb-3">{t(step.title)}</h3>
+              <p className="text-[#A1A1AA] leading-relaxed max-w-xs">{t(step.desc)}</p>
             </motion.div>
           ))}
         </div>

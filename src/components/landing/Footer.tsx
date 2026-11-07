@@ -15,14 +15,14 @@ export function Footer() {
 
           <div className="flex gap-8">
             <a href="#" className="text-[#A1A1AA] hover:text-[#F5F5F7] text-sm transition-colors">{t("Termos de Uso")}</a>
-            <a href="#" className="text-[#A1A1AA] hover:text-[#F5F5F7] text-sm transition-colors">{t("Privacidade")}</a>
+            <a href="/privacy" className="text-[#A1A1AA] hover:text-[#F5F5F7] text-sm transition-colors">{t("Privacidade")}</a>
             <a href="#" className="text-[#A1A1AA] hover:text-[#F5F5F7] text-sm transition-colors">{t("Contato")}</a>
           </div>
         </div>
 
         <div className="mt-8 pt-8 border-t border-white/5 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-[#A1A1AA] text-sm">
-            © {currentYear} FotoFlow. Todos os direitos reservados.
+            © {currentYear} FotoFlow. {t("Todos os direitos reservados.")}
           </p>
           <p className="text-[#A1A1AA] text-xs">
             {t("Feito com IA. Para humanos.")}

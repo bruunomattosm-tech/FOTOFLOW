@@ -49,10 +49,10 @@ export function Counters() {
     <section className="py-10 border-y border-white/5 bg-[#0A0A0F]/50">
       <div className="container mx-auto px-6 lg:px-8 max-w-7xl">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
-          <Counter end={18472} suffix="+" label="Fotos geradas" />
-          <Counter end={4.9} suffix="/5" label="Avaliação média" />
-          <Counter end={2} suffix=" min" label="Tempo médio" />
-          <Counter end={5} label="Estilos disponíveis" />
+          <Counter end={18472} suffix="+" label={t("Fotos geradas")} />
+          <Counter end={4.9} suffix="/5" label={t("Avaliação média")} />
+          <Counter end={2} suffix=" min" label={t("Tempo médio")} />
+          <Counter end={5} label={t("Estilos disponíveis")} />
         </div>
       </div>
     </section>

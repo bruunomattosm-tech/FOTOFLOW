@@ -22,7 +22,6 @@ export async function downloadPhoto(url: string, index: number) {
 }
 export function Photo({ url, locked = false }: { url: string; locked?: boolean }) {
  const { t } = useLocale();
- const { t } = useLocale();
   return (
     <div className="ff-photo">
       <img src={url} alt="Foto do ensaio" />

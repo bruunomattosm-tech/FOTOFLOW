@@ -44,7 +44,7 @@ export function Styles() {
 
   const handleSelectStyle = (styleId: string) => {
     track('SelectStyle', { style: styleId });
-    navigate('/app');
+    navigate('/app' + location.search);
   };
 
   return (
@@ -80,7 +80,7 @@ export function Styles() {
             >
               <img
                 src={style.image}
-                alt={style.name}
+                alt={t(style.name)}
                 loading="lazy"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
@@ -88,10 +88,10 @@ export function Styles() {
 
               <div className="absolute inset-0 p-8 flex flex-col justify-end">
                 <h3 className="text-2xl font-bold text-[#F5F5F7] mb-2 group-hover:text-[#A855F7] transition-colors">
-                  {style.name}
+                  {t(style.name)}
                 </h3>
                 <p className="text-[#A1A1AA] text-sm leading-relaxed">
-                  {style.desc}
+                  {t(style.desc)}
                 </p>
               </div>
             </motion.div>

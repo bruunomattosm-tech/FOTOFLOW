@@ -54,22 +54,17 @@ export default function FlowPage() {
         {back && <Back onClick={() => f.go(back)} />}
         <ChoiceSteps f={f} cta={cta} />
         {f.step === "capture" && (
-          <>
-            <CaptureStep photos={f.photos} onChange={f.setPhotos} />
+          <>            <CaptureStep photos={f.photos} onChange={f.setPhotos} />
             {cta("Gerar meu ensaio", () => f.go("lead"), f.photos.filter(Boolean).length < 5)}
-          </>
-        )}
+          </>        )}
         {f.step === "lead" && (
-          <>
-            <LeadStep lead={f.lead} onChange={f.setLead} error={t(f.error)} />
+          <>            <LeadStep lead={f.lead} onChange={f.setLead} error={t(f.error)} />
             {cta("Começar a criar", () => {
               void f.saveLead();
             })}
-          </>
-        )}
+          </>        )}
         {(f.step === "gen" || f.step === "gen2") && (
-          <>
-            <GenerationStep batch={f.step === "gen2"} percent={f.percent} status={f.status} />
+          <>            <GenerationStep batch={f.step === "gen2"} percent={f.percent} status={f.status} />
             {f.error && (
               <div className="ff-notice danger" role="alert">
                 {t(f.error)}
@@ -81,22 +76,18 @@ export default function FlowPage() {
                 </Action>
               </div>
             )}
-          </>
-        )}
+          </>        )}
         {f.step === "result" && (
-          <>
-            <h1>{t("Seu ensaio está pronto")}</h1>
+          <>            <h1>{t("Seu ensaio está pronto")}</h1>
             <p className="ff-sub">{t("Veja a prévia. Desbloqueie para baixar sem marca d’água.")}</p>
             <Photo url={url} locked={f.settings.watermark} />
             <p className="ff-sub ff-fine ff-space">
               {t("Ela fica guardada por 24h. Depois, será apagada.")}
             </p>
             {cta("Desbloquear esta imagem", () => f.go("pack"))}
-          </>
-        )}
+          </>        )}
         {f.step === "pack" && (
-          <>
-            <h1>{t("Escolha seu pacote")}</h1>
+          <>            <h1>{t("Escolha seu pacote")}</h1>
             <p className="ff-sub">{t("A imagem que você já viu está inclusa em todos.")}</p>
             <div className="ff-options">
               {f.settings.packages.map((p) => (
@@ -120,19 +111,15 @@ export default function FlowPage() {
               },
               !f.pack,
             )}
-          </>
-        )}
+          </>        )}
         {f.step === "pix" && f.pack && (
-          <>
-            {f.country === "BR" ? <PixStep pack={f.pack} code={f.pixCode} /> : <InternationalCheckout pack={f.pack} />}
+          <>            {f.country === "BR" ? <PixStep pack={f.pack} code={f.pixCode} /> : <InternationalCheckout pack={f.pack} />}
             {cta("Simular pagamento confirmado", () => {
               void f.confirmPayment();
             })}
-          </>
-        )}
+          </>        )}
         {f.step === "paid" && (
-          <>
-            <div className="ff-notice success">{t("✓ Pagamento confirmado.")}</div>
+          <>            <div className="ff-notice success">{t("✓ Pagamento confirmado.")}</div>
             <h1>{t("Sua primeira foto")}</h1>
             <Photo url={url} />
             <DownloadButton url={url} index={0} onError={f.setError} />
@@ -143,11 +130,9 @@ export default function FlowPage() {
               f.setSelected([]);
               f.go("batch");
             })}
-          </>
-        )}
+          </>        )}
         {f.step === "batch" && (
-          <>
-            <h1>{t("Escolha as referências")}</h1>
+          <>            <h1>{t("Escolha as referências")}</h1>
             <p className="ff-sub">{t("Selecione")} {f.remaining} {t("para criar tudo de uma vez.")}</p>
             <div className="ff-count">
               <span>{t("Selecionadas")}</span>
@@ -163,11 +148,9 @@ export default function FlowPage() {
               () => f.go("gen2"),
               f.selected.length !== f.remaining,
             )}
-          </>
-        )}
+          </>        )}
         {f.step === "final" && (
-          <>
-            <h1>{t("Seu ensaio completo")}</h1>
+          <>            <h1>{t("Seu ensaio completo")}</h1>
             <p className="ff-sub">{f.results.length} {t("fotos prontas para baixar.")}</p>
             <div className="ff-reference-grid">
               {f.results.map((r, i) => (
@@ -184,8 +167,7 @@ export default function FlowPage() {
               f.setReferenceId("");
               f.go("style");
             })}
-          </>
-        )}
+          </>        )}
         {f.error && !["lead", "gen", "gen2"].includes(f.step) && (
           <p className="ff-danger" role="alert">
             {t(f.error)}
