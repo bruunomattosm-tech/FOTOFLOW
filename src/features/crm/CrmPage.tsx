@@ -174,7 +174,7 @@ export default function CrmPage() {
         {page === "funil" && <FunnelPage />}
         {page === "pedidos" && <OrdersPage orders={d.orders} leads={d.leads} />}
         {page === "biblioteca" && <LibraryPage references={d.references} refresh={d.refresh} />}
-        {page === "config" && <SettingsPage settings={d.settings} refresh={d.refresh} />}
+        {page === "config" && <SettingsPage key={JSON.stringify(d.settings)} settings={d.settings} refresh={d.refresh} />}
       </main>
     </div>
   );
