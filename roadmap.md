@@ -5,11 +5,11 @@
 - [x] Validar regras, navegação e telas no preview.
 
 ## Expansão internacional
-- [ ] País, idioma e moeda na landing e no funil.
-- [ ] Configuração de domínios, preços e pagamentos locais no CRM.
-- [ ] Bandeiras, filtros e relatórios com moedas separadas.
-- [ ] Configuração de tracking, eventos do funil, debugger e consentimento regional.
-- [ ] Testar fluxo internacional e preservação de IA.
-- [ ] Ativar gateways e reporting servidor reais — depende de credenciais e configuração de serviços.
+- [x] País, idioma e moeda na landing e no funil.
+- [x] Configuração de domínios, preços e pagamentos locais no CRM.
+- [x] Bandeiras, filtros e relatórios com moedas separadas.
+- [x] Configuração demonstrativa de tracking, eventos do funil, debugger e consentimento regional (lovable-cookie-consent-banner).
+- [x] Testar fluxo internacional e preservação de controles de IA.
+- [ ] Ativar gateways, DNS, Pixel/TikTok/CAPI reais e matching — depende de backend seguro, contas, credenciais, confirmação de pagamentos e verificação dos provedores; registro de região/evidência para servidor permanece pendente.
 
 Escopo anterior: protótipos funcionais no modo mock; administração autenticada e retenção no servidor não implementadas.

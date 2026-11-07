@@ -73,7 +73,7 @@ export default function CrmPage() {
   const [params, setParams] = useSearchParams();
   const [collapsed, setCollapsed] = useState(false);
   const page = params.get("tela") || "visao";
-  const active = NAV.find((n) => n.id === page) || NAV[0];
+  const active = NAV.find((n) => n.id === page) || NAV.find(n => n.id === "visao");
   const go = (id: string) => {
     setParams({ tela: id });
     window.scrollTo(0, 0);
