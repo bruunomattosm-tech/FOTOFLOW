@@ -88,8 +88,8 @@ export class MockApiService implements FotoFlowApiService {
 
     // Se o usuário forneceu uma foto de referência ou foto de usuário, usamos como mock visual
     const mockPreviewUrl =
-      params.referenceImage ||
       params.userImages[0] ||
+      params.referenceImage ||
       'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1000&auto=format&fit=crop&q=80';
 
     const ensaio: Ensaio = {
@@ -102,7 +102,7 @@ export class MockApiService implements FotoFlowApiService {
       urlFinal: mockPreviewUrl,
       promptUsado: params.customPrompt || 'Ultra-realistic Hasselblad 85mm f/1.4 commercial editorial portrait',
       criadoEm: new Date().toISOString(),
-      expiraEm: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+       expiraEm: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
     };
 
     try {
