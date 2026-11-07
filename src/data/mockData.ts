@@ -96,22 +96,22 @@ export const MOCK_PACOTES: Pacote[] = [
   {
     id: 'pacote-starter',
     slug: 'starter',
-    quantidadeFotos: 1,
+    quantidadeFotos: 3,
     precoCentavos: 2990,
     ativo: true,
   },
   {
     id: 'pacote-pro',
     slug: 'pro',
-    quantidadeFotos: 5,
-    precoCentavos: 6990,
+    quantidadeFotos: 6,
+    precoCentavos: 4990,
     ativo: true,
   },
   {
     id: 'pacote-executive',
     slug: 'executive',
-    quantidadeFotos: 15,
-    precoCentavos: 11990,
+    quantidadeFotos: 10,
+    precoCentavos: 7990,
     ativo: true,
   },
 ];

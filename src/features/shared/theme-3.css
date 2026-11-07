@@ -1,0 +1,148 @@
+.ff-camera video {
+  transform: scaleX(-1);
+}
+.ff-guide {
+  position: absolute;
+  inset: 12% 18% 22%;
+  border: 2px dashed var(--ff-guide);
+  border-radius: 50% 50% 45% 45%;
+  pointer-events: none;
+}
+.ff-guide.body {
+  inset: 6% 22%;
+  border-radius: 40% 40% 10% 10%;
+}
+.ff-camera-hint {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  background: var(--ff-overlay);
+  border-radius: 12px;
+  padding: 10px 12px;
+  text-align: center;
+  font-size: 13px;
+}
+.ff-thumbs {
+  display: flex;
+  gap: 8px;
+  margin: 14px 0;
+}
+.ff-theme .ff-thumb {
+  flex: 1;
+  min-width: 0;
+  aspect-ratio: 3/4;
+  padding: 2px;
+  border: 1.5px dashed var(--ff-line);
+  border-radius: 10px;
+  font-size: 10px;
+  color: var(--ff-muted);
+  overflow: hidden;
+}
+.ff-theme .ff-thumb.on {
+  border: 2px solid var(--ff-violet);
+}
+.ff-theme .ff-thumb.complete {
+  border: 2px solid var(--ff-success);
+}
+.ff-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ff-row > .ff-small {
+  flex: 1;
+}
+.ff-input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--ff-line);
+  border-radius: 12px;
+  background: var(--ff-card);
+  color: var(--ff-text);
+  font: inherit;
+  min-width: 0;
+}
+.ff-input:focus {
+  outline: 2px solid var(--ff-magenta);
+  outline-offset: 2px;
+}
+.ff-label {
+  font-size: 13px;
+  color: var(--ff-muted);
+  display: block;
+  margin: 12px 0 6px;
+}
+.ff-label .ff-input {
+  display: block;
+  margin-top: 6px;
+  color: var(--ff-text);
+}
+.ff-generation {
+  text-align: center;
+  padding-top: 30px;
+}
+.ff-percent {
+  font-size: 56px;
+  font-weight: 800;
+}
+.ff-progress {
+  height: 14px;
+  width: 100%;
+  margin: 18px 0 8px;
+}
+.ff-notice {
+  padding: 12px 14px;
+  border: 1px solid var(--ff-line);
+  border-radius: 14px;
+  margin: 18px 0;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ff-notice.warning {
+  color: var(--ff-warning);
+  background: var(--ff-warning-bg);
+}
+.ff-notice.success {
+  color: var(--ff-success);
+  background: var(--ff-success-bg);
+}
+.ff-notice.violet {
+  background: var(--ff-violet-bg);
+}
+.ff-notice.danger {
+  color: var(--ff-danger);
+  background: var(--ff-danger-bg);
+}
+.ff-photo {
+  aspect-ratio: 3/4;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--ff-line);
+  border-radius: 22px;
+  background: var(--ff-card);
+  margin-top: 12px;
+}
+.ff-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ff-watermark {
+  position: absolute;
+  inset: -30%;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  gap: 34px 26px;
+  transform: rotate(-24deg);
+  pointer-events: none;
+}
+.ff-watermark span {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ff-watermark);
+}

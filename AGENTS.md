@@ -51,3 +51,8 @@ npm run build
 ```
 
 Ambos os comandos devem passar com zero erros (`exit code 0`).
+
+## Prototype integration
+- Keep the React Router landing at `/`, the modular client flow at `/app`, and CRM at `/crm`; keep the original Studio available at `/studio` to preserve existing AI controls and master prompts.
+- Route prototype reads and writes through `apiService.prototype`; this is explicitly mock-only browser persistence, not production administration or payment infrastructure.
+- Keep converted flow and CRM modules under 200 lines and use scoped semantic theme tokens so the existing landing remains unchanged.

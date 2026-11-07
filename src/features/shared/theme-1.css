@@ -1,0 +1,147 @@
+.ff-theme {
+  --ff-bg: #0a0710;
+  --ff-sidebar: #0d0916;
+  --ff-card: #141020;
+  --ff-line: #2a2240;
+  --ff-text: #f5f2fb;
+  --ff-muted: #9a92b0;
+  --ff-violet: #8b5cf6;
+  --ff-magenta: #d946ef;
+  --ff-success: #34d399;
+  --ff-warning: #facc15;
+  --ff-danger: #fb7185;
+  --ff-active: #1b1430;
+  --ff-overlay: #000a;
+  --ff-watermark: #fff6;
+  --ff-guide: #fff8;
+  --ff-gradient: linear-gradient(90deg, var(--ff-violet), var(--ff-magenta));
+  --ff-shadow: 0 8px 30px #8b5cf655;
+  --ff-success-bg: #34d39914;
+  --ff-warning-bg: #facc1514;
+  --ff-danger-bg: #fb718520;
+  --ff-violet-bg: #8b5cf630;
+  background: var(--ff-bg);
+  color: var(--ff-text);
+  font:
+    500 14px/1.45 "Plus Jakarta Sans",
+    system-ui,
+    sans-serif;
+  min-height: 100vh;
+  color-scheme: dark;
+  letter-spacing: 0;
+}
+.ff-theme * {
+  box-sizing: border-box;
+  letter-spacing: 0;
+}
+.ff-theme h1 {
+  font-size: 28px;
+  line-height: 1.15;
+  font-weight: 800;
+  margin: 0 0 8px;
+}
+.ff-theme h2 {
+  font-size: 22px;
+  font-weight: 800;
+  margin: 12px 0;
+}
+.ff-theme h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.ff-theme a {
+  text-decoration: none;
+  color: inherit;
+}
+.ff-theme .ff-action {
+  background: transparent;
+  color: var(--ff-text);
+  height: auto;
+  min-height: 0;
+  white-space: normal;
+  letter-spacing: 0;
+  box-shadow: none;
+}
+.ff-theme .ff-action:hover {
+  background: var(--ff-active);
+  color: var(--ff-text);
+  transform: none;
+}
+.ff-theme .ff-action:focus-visible,
+.ff-theme a:focus-visible {
+  outline: 2px solid var(--ff-magenta);
+  outline-offset: 3px;
+}
+.ff-theme .ff-action:disabled {
+  opacity: 0.4;
+}
+.ff-theme .ff-logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 17px;
+  font-weight: 800;
+}
+.ff-sub {
+  color: var(--ff-muted);
+  margin: 0 0 20px;
+}
+.ff-fine {
+  font-size: 13px;
+}
+.ff-space {
+  margin-top: 18px;
+}
+.ff-row {
+  display: flex;
+  gap: 10px;
+}
+.ff-wide {
+  width: 100%;
+}
+.ff-theme .ff-small {
+  padding: 11px 14px;
+  border: 1px solid var(--ff-line);
+  border-radius: 12px;
+  background: var(--ff-card);
+  font-size: 13px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.ff-theme .ff-primary,
+.ff-theme .ff-cta {
+  background: var(--ff-gradient);
+  color: var(--ff-text);
+  border: 0;
+  border-radius: 99px;
+  font-weight: 800;
+  gap: 8px;
+  padding: 12px 20px;
+}
+.ff-theme .ff-primary:hover,
+.ff-theme .ff-cta:hover {
+  background: var(--ff-gradient);
+  filter: brightness(1.1);
+}
+.ff-theme .ff-icon-button {
+  padding: 8px;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  color: var(--ff-muted);
+}
+.ff-theme .ff-back {
+  color: var(--ff-muted);
+  padding: 6px 0;
+  margin-bottom: 12px;
+  gap: 6px;
+  font-size: 14px;
+}
+.ff-flow {
+  background: radial-gradient(120% 50% at 50% 0, var(--ff-active), var(--ff-bg) 60%) fixed;
+  font-size: 15px;
+}

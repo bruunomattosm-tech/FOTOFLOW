@@ -1,0 +1,17 @@
+@media (prefers-reduced-motion: no-preference) {
+  .ff-spin {
+    animation: ff-spin 1.2s linear infinite;
+  }
+  @keyframes ff-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ff-theme * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
