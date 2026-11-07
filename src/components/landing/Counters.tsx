@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useLocale } from '@/context/LocaleContext';
 import { motion, useInView } from 'framer-motion';
 
 function Counter({ end, suffix = '', label }: { end: number; suffix?: string; label: string }) {
@@ -45,6 +46,7 @@ function Counter({ end, suffix = '', label }: { end: number; suffix?: string; la
 }
 
 export function Counters() {
+  const { t } = useLocale();
   return (
     <section className="py-10 border-y border-white/5 bg-[#0A0A0F]/50">
       <div className="container mx-auto px-6 lg:px-8 max-w-7xl">
