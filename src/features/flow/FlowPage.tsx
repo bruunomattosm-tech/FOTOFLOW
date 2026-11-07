@@ -80,7 +80,7 @@ export default function FlowPage() {
           <>
             <h1>Seu ensaio está pronto</h1>
             <p className="ff-sub">Veja a prévia. Desbloqueie para baixar sem marca d’água.</p>
-            <Photo url={url} locked />
+            <Photo url={url} locked={f.settings.watermark} />
             <p className="ff-sub ff-fine ff-space">
               Ela fica guardada por 24h. Depois, será apagada.
             </p>

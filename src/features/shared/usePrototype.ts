@@ -16,6 +16,8 @@ export function usePrototype() {
   }, []);
   useEffect(() => {
     void refresh();
+    const timer = window.setInterval(() => { void refresh(); }, 30000);
+    return () => clearInterval(timer);
   }, [refresh]);
   return { settings, setSettings, leads, orders, references, refresh };
 }
