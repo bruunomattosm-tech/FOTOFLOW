@@ -1,19 +1,22 @@
-import React from 'react';
-import { Sparkles, ShieldCheck, CheckCircle2, Zap } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
+import React from "react";
+import { Sparkles, ShieldCheck, CheckCircle2, Zap } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 export const HeroSection: React.FC = () => {
   return (
     <section className="text-center py-6 sm:py-10 max-w-3xl mx-auto px-4 space-y-4">
       <div className="inline-flex items-center gap-2">
-        <Badge variant="amber" className="px-3 py-1 text-xs gap-1.5 font-bold shadow-sm shadow-amber-500/20">
+        <Badge
+          variant="amber"
+          className="px-3 py-1 text-xs gap-1.5 font-bold shadow-sm shadow-amber-500/20"
+        >
           <Sparkles className="w-3.5 h-3.5 text-amber-400" />
           Retoque Executivo Padrão Forbes & LinkedIn
         </Badge>
       </div>
 
       <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
-        Seu ensaio fotográfico de estúdio{' '}
+        Seu ensaio fotográfico de estúdio{" "}
         <span className="bg-gradient-to-r from-amber-400 via-violet-400 to-emerald-400 bg-clip-text text-transparent">
           em segundos com IA
         </span>
