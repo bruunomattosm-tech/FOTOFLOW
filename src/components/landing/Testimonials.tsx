@@ -1,3 +1,5 @@
+import { translate } from '@/features/international/messages';
+import { useLocale } from '@/context/LocaleContext';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
@@ -25,12 +27,13 @@ const testimonials = [
 ];
 
 export function Testimonials() {
+ const { t, country } = useLocale();
   return (
     <section className="py-24 bg-[#14141C] border-y border-white/5">
       <div className="container mx-auto px-6 lg:px-8 max-w-7xl">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold text-[#F5F5F7] mb-6">
-            O que dizem sobre nós
+            {t("O que dizem sobre nós")}
           </h2>
         </div>
 
@@ -50,7 +53,7 @@ export function Testimonials() {
                 ))}
               </div>
               <p className="text-[#F5F5F7] text-lg leading-relaxed mb-8 flex-grow">
-                {t.text}
+                {translate(t.text, country)}
               </p>
               <div className="flex items-center gap-4 mt-auto">
                 <img

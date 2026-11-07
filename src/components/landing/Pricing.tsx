@@ -1,3 +1,6 @@
+import { usePrototype } from '@/features/shared/usePrototype';
+import { money } from '@/lib/i18n';
+import { useLocale } from '@/context/LocaleContext';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
@@ -29,11 +32,13 @@ const plans = [
 ];
 
 export function Pricing() {
+ const { t, country } = useLocale();
+ const { international } = usePrototype();
   const navigate = useNavigate();
 
   const handleCTA = (planName: string) => {
     track('ClickCTA', { location: 'Pricing', plan: planName });
-    navigate('/app');
+    navigate('/app' + location.search);
   };
 
   return (
@@ -41,10 +46,10 @@ export function Pricing() {
       <div className="container mx-auto px-6 lg:px-8 max-w-7xl">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold text-[#F5F5F7] mb-6">
-            Pague só pelo que baixar
+            {t("Pague só pelo que baixar")}
           </h2>
           <p className="text-[#A1A1AA] text-lg max-w-2xl mx-auto">
-            Criar e visualizar seu ensaio é <strong className="text-white">100% grátis</strong>. Você só paga se gostar do resultado e quiser baixar em alta resolução.
+            {t("Criar e visualizar seu ensaio é")} <strong className="text-white">{t("100% grátis")}</strong>{t(". Você só paga se gostar do resultado e quiser baixar em alta resolução.")}
           </p>
         </div>
 
@@ -64,20 +69,20 @@ export function Pricing() {
             >
               {plan.isPopular && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#8B5CF6] to-[#A855F7] text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">
-                  Mais Escolhido
+                  {t("Mais Escolhido")}
                 </div>
               )}
 
-              <h3 className="text-2xl font-bold text-[#F5F5F7] mb-2">{plan.photos}</h3>
+              <h3 className="text-2xl font-bold text-[#F5F5F7] mb-2">{international[country].packages[idx]?.count} {t("fotos")}</h3>
               <div className="mb-6 flex items-baseline gap-1">
-                <span className="text-4xl font-bold text-[#22C55E]">{plan.price}</span>
+                <span className="text-4xl font-bold text-[#22C55E]">{money(international[country].packages[idx]?.cents || 0, country)}</span>
               </div>
 
               <ul className="space-y-4 mb-8 flex-grow">
                 {plan.features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-3 text-[#A1A1AA]">
                     <Check size={20} className="text-[#8B5CF6] shrink-0 mt-0.5" />
-                    <span>{feature}</span>
+                    <span>{t(feature)}</span>
                   </li>
                 ))}
               </ul>
@@ -90,7 +95,7 @@ export function Pricing() {
                     : 'bg-white/5 text-white hover:bg-white/10'
                 }`}
               >
-                Criar meu ensaio
+                {t("Criar meu ensaio")}
               </button>
             </motion.div>
           ))}

@@ -1,6 +1,8 @@
+import { useLocale } from '@/context/LocaleContext';
 import React from 'react';
 
 export function Footer() {
+ const { t } = useLocale();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -12,18 +14,18 @@ export function Footer() {
           </div>
 
           <div className="flex gap-8">
-            <a href="#" className="text-[#A1A1AA] hover:text-[#F5F5F7] text-sm transition-colors">Termos de Uso</a>
-            <a href="#" className="text-[#A1A1AA] hover:text-[#F5F5F7] text-sm transition-colors">Privacidade</a>
-            <a href="#" className="text-[#A1A1AA] hover:text-[#F5F5F7] text-sm transition-colors">Contato</a>
+            <a href="#" className="text-[#A1A1AA] hover:text-[#F5F5F7] text-sm transition-colors">{t("Termos de Uso")}</a>
+            <a href="/privacy" className="text-[#A1A1AA] hover:text-[#F5F5F7] text-sm transition-colors">{t("Privacidade")}</a>
+            <a href="#" className="text-[#A1A1AA] hover:text-[#F5F5F7] text-sm transition-colors">{t("Contato")}</a>
           </div>
         </div>
 
         <div className="mt-8 pt-8 border-t border-white/5 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-[#A1A1AA] text-sm">
-            © {currentYear} FotoFlow. Todos os direitos reservados.
+            © {currentYear} FotoFlow. {t("Todos os direitos reservados.")}
           </p>
           <p className="text-[#A1A1AA] text-xs">
-            Feito com IA. Para humanos.
+            {t("Feito com IA. Para humanos.")}
           </p>
         </div>
       </div>

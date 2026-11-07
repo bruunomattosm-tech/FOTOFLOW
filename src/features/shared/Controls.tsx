@@ -1,3 +1,4 @@
+import { useLocale } from '@/context/LocaleContext';
 import type { ButtonProps } from "@/components/ui/button";
 import { Button } from "@/components/ui/button";
 import { Check, ArrowLeft } from "lucide-react";
@@ -6,9 +7,10 @@ export function Action({ className = "", ...props }: ButtonProps) {
   return <Button variant="ghost" className={`ff-action ${className}`} {...props} />;
 }
 export function Back({ onClick }: { onClick: () => void }) {
+ const { t } = useLocale();
   return (
     <Action className="ff-back" onClick={onClick}>
-      <ArrowLeft size={15} /> Voltar
+      <ArrowLeft size={15} /> {t("Voltar")}
     </Action>
   );
 }
@@ -46,14 +48,16 @@ export function ReferenceGrid({
 export function Toggle({
   checked,
   onChange,
-  label,
+  label, disabled = false,
 }: {
+  disabled?: boolean;
   checked: boolean;
   onChange: () => void;
   label: string;
 }) {
   return (
     <Action
+      disabled={disabled}
       role="switch"
       aria-label={label}
       aria-checked={checked}

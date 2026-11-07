@@ -1,3 +1,4 @@
+import { useLocale } from '@/context/LocaleContext';
 export interface LeadForm {
   name: string;
   phone: string;
@@ -16,15 +17,16 @@ export function LeadStep({
   onChange: (lead: LeadForm) => void;
   error: string;
 }) {
+ const { t, locale } = useLocale();
   return (
     <>
-      <h1>Quase lá!</h1>
+      <h1>{t("Quase lá!")}</h1>
       <p className="ff-sub">
-        Informe seus dados para receber o ensaio e acessar depois, sem senha.
+        {t("Informe seus dados para receber o ensaio e acessar depois, sem senha.")}
       </p>
       {(["name", "phone", "email"] as const).map((field) => (
         <label className="ff-label" key={field}>
-          {{ name: "Nome", phone: "Telefone (WhatsApp)", email: "E-mail" }[field]}
+          {t({ name: "Nome", phone: "Telefone (WhatsApp)", email: "E-mail" }[field])}
           <input
             className="ff-input"
             type={field === "phone" ? "tel" : field === "email" ? "email" : "text"}
@@ -32,13 +34,13 @@ export function LeadStep({
             value={lead[field]}
             onChange={(e) => onChange({ ...lead, [field]: e.target.value })}
             placeholder={
-              { name: "Seu nome", phone: "(11) 98765-4321", email: "voce@email.com" }[field]
+              { name: t("Seu nome"), phone: locale.phone, email: "you@email.com" }[field]
             }
           />
         </label>
       ))}
       <p className="ff-sub ff-fine">
-        Suas selfies são apagadas em 24h se você não liberar o ensaio.
+        {t("Suas selfies são apagadas em 24h se você não liberar o ensaio.")}
       </p>
       {error && (
         <p className="ff-danger" role="alert">

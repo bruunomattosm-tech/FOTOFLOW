@@ -1,3 +1,4 @@
+import type { Country, Currency } from '@/lib/i18n';
 export type FlowStep =
   | "gender"
   | "style"
@@ -39,6 +40,7 @@ export interface BusinessSettings {
   message: string;
 }
 export interface CrmLead {
+  country?: Country; currency?: Currency; subdomain?: string; orderCents?: number;
   id: string;
   name: string;
   gender: Gender;
@@ -56,6 +58,7 @@ export interface CrmLead {
   note: string;
 }
 export interface CrmOrder {
+  country?: Country; currency?: Currency; subdomain?: string; leadId?: string;
   id: string;
   name: string;
   count: number;

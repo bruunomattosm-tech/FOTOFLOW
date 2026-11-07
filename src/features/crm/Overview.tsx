@@ -1,24 +1,35 @@
+import { useState } from 'react';
+import { ReportHeader } from '@/features/international/ReportHeader';
+import { summarizeOrders, type ReportScope } from '@/features/international/reports';
+import type { InternationalConfig } from '@/features/international/types';
+import type { CrmOrder } from '@/features/shared/types';
+import { money } from '@/lib/i18n';
+import { CountryBadge } from '@/features/international/CountrySelector';
 import { Action } from "../shared/Controls";
 import { FunnelChart, KPIs, LeadTable, Panel } from "./Widgets";
 import type { CrmLead } from "../shared/types";
 export function Overview({
-  leads,
+  leads, orders, config,
   open,
   go,
 }: {
-  leads: CrmLead[];
+  leads: CrmLead[]; orders: CrmOrder[]; config: InternationalConfig;
   open: (id: string) => void;
   go: () => void;
 }) {
+  const [scope, setScope] = useState<ReportScope>("all");
+  const summary = summarizeOrders(orders, scope, config);
+  const filtered = leads.filter(l => scope === "all" || (l.country || "BR") === scope);
+  const display = (cents: number) => scope === "all" && summary.missing.length ? "—" : money(cents, scope === "all" ? "BR" : scope);
   return (
     <>
+      <ReportHeader scope={scope} setScope={setScope} orders={orders} config={config} />
       <KPIs
         items={[
-          ["Leads capturados", "1.284", "+18% vs. semana anterior"],
-          ["Conversão total", "14,2%", "+1,6 p.p."],
-          ["Abandono de checkout", "38%", "+4 p.p. atenção", "danger"],
-          ["Tempo médio até pagar", "11 min", "do quiz ao PIX confirmado", "muted"],
-          ["Receita PIX", "R$ 8.942", "182 pedidos · ticket R$ 49,13", "muted"],
+          ["Leads capturados", String(filtered.length), "Neste ambiente"],
+          ["Receita", display(summary.revenue), `${summary.paid.length} pedidos pagos`],
+          ["Ticket médio", display(summary.average), "", "muted"],
+          ["Pendentes", display(summary.pendingAmount), `${summary.pending.length} pedidos`, "warning"],
         ]}
       />
       <div className="crm-two">
@@ -32,23 +43,13 @@ export function Overview({
           title="Precisam de contato hoje"
           subtitle="Parados há mais de 30 min com alta intenção."
         >
-          {[
-            ["47 no checkout", "geraram ensaio, não pagaram o PIX"],
-            ["112 sem fotos", "pararam na etapa de selfies"],
-            ["23 imagens expiram", "retenção de 24h termina em menos de 3h"],
-          ].map(([a, b]) => (
-            <Action key={a} className="crm-alert" onClick={go}>
-              <div>
-                <b>{a}</b>
-                <span>{b}</span>
-              </div>
-              <b>Ver</b>
-            </Action>
+          {filtered.filter(l => l.tone !== "success").slice(0, 4).map(l => (
+            <Action key={l.id} className="crm-alert" onClick={() => open(l.id)}><div><b>{l.name} <CountryBadge country={l.country} /></b><span>{l.stage}</span></div><b>Ver</b></Action>
           ))}
         </Panel>
       </div>
       <Panel title="Leads recentes">
-        <LeadTable leads={leads.slice(0, 5)} open={open} />
+        <LeadTable leads={filtered.slice(0, 5)} open={open} />
       </Panel>
     </>
   );

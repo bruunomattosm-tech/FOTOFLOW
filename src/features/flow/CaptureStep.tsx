@@ -1,3 +1,4 @@
+import { useLocale } from '@/context/LocaleContext';
 import { useEffect, useRef, useState } from "react";
 import { Camera, Upload, RotateCcw } from "lucide-react";
 import { SHOTS } from "../shared/catalog";
@@ -9,6 +10,7 @@ export function CaptureStep({
   photos: string[];
   onChange: (photos: string[]) => void;
 }) {
+ const { t, locale } = useLocale();
   const [index, setIndex] = useState(0);
   const [error, setError] = useState("");
   const video = useRef<HTMLVideoElement>(null);
@@ -89,19 +91,19 @@ export function CaptureStep({
   }
   return (
     <>
-      <h1>Fotos guiadas</h1>
-      <p className="ff-sub">{count} de 5 fotos. Boa luz e sem óculos escuros ajudam muito.</p>
+      <h1>{t("Fotos guiadas")}</h1>
+      <p className="ff-sub">{count} {t("de 5 fotos. Boa luz e sem óculos escuros ajudam muito.")}</p>
       <div className="ff-camera">
         {photos[index] ? (
-          <img src={photos[index]} alt={SHOTS[index]?.[0]} />
+          <img src={photos[index]} alt={t(SHOTS[index]?.[0] || "")} />
         ) : (
           <video ref={video} autoPlay playsInline muted />
         )}
         <div className={`ff-guide ${index === 4 ? "body" : ""}`} />
         <div className="ff-camera-hint">
-          <b>{SHOTS[index]?.[0]}</b>
+          <b>{t(SHOTS[index]?.[0] || "")}</b>
           <br />
-          {error || SHOTS[index]?.[1]}
+          {t(error || SHOTS[index]?.[1] || "")}
         </div>
       </div>
       <div className="ff-thumbs">
@@ -109,10 +111,10 @@ export function CaptureStep({
           <Action
             key={shot[0]}
             className={`ff-thumb ${i === index ? "on" : ""} ${photos[i] ? "complete" : ""}`}
-            aria-label={shot[0]}
+            aria-label={t(shot[0])}
             onClick={() => setIndex(i)}
           >
-            {photos[i] ? <img src={photos[i]} alt={shot[0]} /> : shot[0]}
+            {photos[i] ? <img src={photos[i]} alt={shot[0]} /> : t(shot[0])}
           </Action>
         ))}
       </div>
@@ -120,12 +122,12 @@ export function CaptureStep({
         {index !== 4 && (
           <Action className="ff-small" onClick={snap}>
             {photos[index] ? <RotateCcw size={16} /> : <Camera size={16} />}
-            {photos[index] ? "Refazer" : "Tirar foto"}
+            {photos[index] ? t("Refazer") : t("Tirar foto")}
           </Action>
         )}
         <Action className="ff-small" onClick={() => input.current?.click()}>
           <Upload size={16} />
-          Subir da galeria
+          {t("Subir da galeria")}
         </Action>
       </div>
       <input

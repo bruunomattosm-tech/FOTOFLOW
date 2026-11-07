@@ -1,3 +1,4 @@
+import { useLocale } from '@/context/LocaleContext';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
@@ -38,11 +39,12 @@ const stylesList = [
 ];
 
 export function Styles() {
+ const { t } = useLocale();
   const navigate = useNavigate();
 
   const handleSelectStyle = (styleId: string) => {
     track('SelectStyle', { style: styleId });
-    navigate('/app');
+    navigate('/app' + location.search);
   };
 
   return (
@@ -55,10 +57,10 @@ export function Styles() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-bold text-[#F5F5F7] mb-6">
-            Escolha o ensaio da sua vida
+            {t("Escolha o ensaio da sua vida")}
           </h2>
           <p className="text-[#A1A1AA] text-lg max-w-2xl mx-auto">
-            Cinco categorias de excelência. Qualidade de estúdio, direção de arte e luz impecável para cada momento.
+            {t("Cinco categorias de excelência. Qualidade de estúdio, direção de arte e luz impecável para cada momento.")}
           </p>
         </motion.div>
 
@@ -78,7 +80,7 @@ export function Styles() {
             >
               <img
                 src={style.image}
-                alt={style.name}
+                alt={t(style.name)}
                 loading="lazy"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
@@ -86,10 +88,10 @@ export function Styles() {
 
               <div className="absolute inset-0 p-8 flex flex-col justify-end">
                 <h3 className="text-2xl font-bold text-[#F5F5F7] mb-2 group-hover:text-[#A855F7] transition-colors">
-                  {style.name}
+                  {t(style.name)}
                 </h3>
                 <p className="text-[#A1A1AA] text-sm leading-relaxed">
-                  {style.desc}
+                  {t(style.desc)}
                 </p>
               </div>
             </motion.div>

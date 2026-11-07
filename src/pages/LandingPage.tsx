@@ -15,7 +15,7 @@ import { Footer } from '@/components/landing/Footer';
 
 export default function LandingPage() {
   useEffect(() => {
-    track('ViewContent');
+    track('PageView');
   }, []);
 
   return (

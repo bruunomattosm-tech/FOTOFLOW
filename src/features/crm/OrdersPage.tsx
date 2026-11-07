@@ -1,28 +1,36 @@
+import { ReportHeader } from '@/features/international/ReportHeader';
+import { summarizeOrders, type ReportScope } from '@/features/international/reports';
+import type { InternationalConfig } from '@/features/international/types';
+import { CountryBadge } from '@/features/international/CountrySelector';
+import { money } from '@/lib/i18n';
+import { recoveryMessage } from '@/features/international/recovery';
 import { useState } from "react";
 import type { CrmLead, CrmOrder } from "../shared/types";
 import { formatMoney } from "../shared/catalog";
 import { Action } from "../shared/Controls";
 import { KPIs, WhatsApp } from "./Widgets";
-export function OrdersPage({ orders, leads }: { orders: CrmOrder[]; leads: CrmLead[] }) {
+export function OrdersPage({ orders, leads, config }: { config: InternationalConfig; orders: CrmOrder[]; leads: CrmLead[] }) {
   const [tab, setTab] = useState("Todos");
-  const paid = orders.filter((o) => o.status === "Pago");
-  const revenue = paid.reduce((n, o) => n + o.cents, 0);
-  const pending = orders.filter((o) => o.status === "Pendente");
+  const [scope, setScope] = useState<ReportScope>("all");
+  const summary = summarizeOrders(orders, scope, config);
+  const { paid, pending, revenue } = summary;
+  const display = (cents: number) => scope === "all" && summary.missing.length ? "—" : money(cents, scope === "all" ? "BR" : scope);
   return (
     <>
+      <ReportHeader scope={scope} setScope={setScope} orders={orders} config={config} />
       <KPIs
         items={[
-          ["Receita PIX", formatMoney(revenue), `${paid.length} pedidos`],
+          ["Receita", display(revenue), `${paid.length} pedidos`],
           [
             "Pendentes",
-            formatMoney(pending.reduce((n, o) => n + o.cents, 0)),
+            display(summary.pendingAmount),
             `${pending.length} pedidos`,
             "warning",
           ],
-          ["Expirados", String(orders.filter((o) => o.status === "Expirado").length), "", "danger"],
+          ["Expirados", String(summary.filtered.filter((o) => o.status === "Expirado").length), "", "danger"],
           [
             "Ticket médio",
-            formatMoney(paid.length ? Math.round(revenue / paid.length) : 0),
+            display(summary.average),
             "",
             "muted",
           ],
@@ -45,18 +53,18 @@ export function OrdersPage({ orders, leads }: { orders: CrmOrder[]; leads: CrmLe
             </tr>
           </thead>
           <tbody>
-            {orders
+            {summary.filtered
               .filter((o) => tab === "Todos" || o.status === tab)
               .map((o) => {
-                const lead = leads.find((l) => l.name === o.name);
+                const lead = leads.find((l) => o.leadId ? l.id === o.leadId : l.name === o.name);
                 return (
                   <tr key={o.id}>
                     <td>
                       <b>{o.id}</b>
                     </td>
-                    <td>{o.name}</td>
+                    <td><div className="ff-inline-badge">{o.name}<CountryBadge country={o.country} /></div></td>
                     <td>{o.count} fotos</td>
-                    <td>{formatMoney(o.cents)}</td>
+                    <td>{money(o.cents, o.country || "BR")}</td>
                     <td>
                       <span
                         className={`ff-pill ${o.status === "Pago" ? "success" : o.status === "Pendente" ? "warning" : "danger"}`}
@@ -71,9 +79,9 @@ export function OrdersPage({ orders, leads }: { orders: CrmOrder[]; leads: CrmLe
                       {o.status !== "Pago" && lead && (
                         <WhatsApp
                           lead={lead}
-                          message={`Oi, ${lead.name.split(" ")[0]}! Seu pedido ${o.id} de ${o.count} fotos por ${formatMoney(o.cents)} está aguardando. Vamos retomar seu PIX?`}
+                          message={`Oi, ${lead.name.split(" ")[0]}! Seu pedido ${o.id} de ${o.count} fotos por ${money(o.cents, o.country || "BR")} está aguardando. Vamos retomar seu PIX?`}
                         >
-                          Reenviar PIX
+                          Retomar pagamento
                         </WhatsApp>
                       )}
                     </td>

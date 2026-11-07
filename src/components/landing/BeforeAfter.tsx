@@ -1,8 +1,10 @@
+import { useLocale } from '@/context/LocaleContext';
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { landingAssets } from '@/data/landingAssets';
 
 export function BeforeAfter() {
+ const { t } = useLocale();
   const [sliderPosition, setSliderPosition] = useState(50);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -55,10 +57,10 @@ export function BeforeAfter() {
       <div className="container mx-auto px-6 lg:px-8 max-w-7xl">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold text-[#F5F5F7] mb-6">
-            O poder da transformação
+            {t("O poder da transformação")}
           </h2>
           <p className="text-[#A1A1AA] text-lg max-w-2xl mx-auto">
-            Arraste para ver como uma simples selfie se torna um retrato de estúdio em minutos.
+            {t("Arraste para ver como uma simples selfie se torna um retrato de estúdio em minutos.")}
           </p>
         </div>
 
@@ -82,7 +84,7 @@ export function BeforeAfter() {
               draggable={false}
             />
             <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
-              <span className="text-white text-sm font-medium">Ensaio FotoFlow</span>
+              <span className="text-white text-sm font-medium">{t("Ensaio FotoFlow")}</span>
             </div>
           </div>
 
