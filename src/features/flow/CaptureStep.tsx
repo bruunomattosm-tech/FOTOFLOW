@@ -1,3 +1,4 @@
+import { useLocale } from '@/context/LocaleContext';
 import { useEffect, useRef, useState } from "react";
 import { Camera, Upload, RotateCcw } from "lucide-react";
 import { SHOTS } from "../shared/catalog";
@@ -89,7 +90,7 @@ export function CaptureStep({
   }
   return (
     <>
-      <h1>Fotos guiadas</h1>
+      <h1>{t("Fotos guiadas")}</h1>
       <p className="ff-sub">{count} de 5 fotos. Boa luz e sem óculos escuros ajudam muito.</p>
       <div className="ff-camera">
         {photos[index] ? (
@@ -120,12 +121,12 @@ export function CaptureStep({
         {index !== 4 && (
           <Action className="ff-small" onClick={snap}>
             {photos[index] ? <RotateCcw size={16} /> : <Camera size={16} />}
-            {photos[index] ? "Refazer" : "Tirar foto"}
+            {photos[index] ? t("Refazer") : t("Tirar foto")}
           </Action>
         )}
         <Action className="ff-small" onClick={() => input.current?.click()}>
           <Upload size={16} />
-          Subir da galeria
+          {t("Subir da galeria")}
         </Action>
       </div>
       <input

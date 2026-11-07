@@ -1,3 +1,4 @@
+import { useLocale } from '@/context/LocaleContext';
 import { ChoiceSteps } from "./ChoiceSteps";
 import { Sparkles, ArrowRight } from "lucide-react";
 import { Action, Back, ReferenceGrid } from "../shared/Controls";
@@ -11,6 +12,7 @@ import { PixStep } from "./PixStep";
 import { useFlow } from "./useFlow";
 import "../shared/prototype.css";
 export default function FlowPage() {
+ const { t } = useLocale();
   const f = useFlow();
   const index = STEPS.indexOf(f.step);
   const url = f.results[0]?.urlFinal || f.photos[0] || "";
@@ -26,7 +28,7 @@ export default function FlowPage() {
   const back = f.step in previous ? previous[f.step as keyof typeof previous] : undefined;
   const cta = (text: string, action: () => void, disabled = false) => (
     <Action className="ff-cta" disabled={disabled || f.busy} onClick={action}>
-      {f.busy ? "Aguarde…" : text}
+      {f.busy ? t("Aguarde…") : text}
       <ArrowRight size={18} />
     </Action>
   );
@@ -70,7 +72,7 @@ export default function FlowPage() {
                   className="ff-small"
                   onClick={() => f.go(f.step === "gen" ? "lead" : "batch")}
                 >
-                  Voltar e tentar novamente
+                  {t("Voltar e tentar novamente")}
                 </Action>
               </div>
             )}
@@ -78,19 +80,19 @@ export default function FlowPage() {
         )}
         {f.step === "result" && (
           <>
-            <h1>Seu ensaio está pronto</h1>
-            <p className="ff-sub">Veja a prévia. Desbloqueie para baixar sem marca d’água.</p>
+            <h1>{t("Seu ensaio está pronto")}</h1>
+            <p className="ff-sub">{t("Veja a prévia. Desbloqueie para baixar sem marca d’água.")}</p>
             <Photo url={url} locked={f.settings.watermark} />
             <p className="ff-sub ff-fine ff-space">
-              Ela fica guardada por 24h. Depois, será apagada.
+              {t("Ela fica guardada por 24h. Depois, será apagada.")}
             </p>
             {cta("Desbloquear esta imagem", () => f.go("pack"))}
           </>
         )}
         {f.step === "pack" && (
           <>
-            <h1>Escolha seu pacote</h1>
-            <p className="ff-sub">A imagem que você já viu está inclusa em todos.</p>
+            <h1>{t("Escolha seu pacote")}</h1>
+            <p className="ff-sub">{t("A imagem que você já viu está inclusa em todos.")}</p>
             <div className="ff-options">
               {f.settings.packages.map((p) => (
                 <Action
@@ -99,7 +101,7 @@ export default function FlowPage() {
                   aria-pressed={p.id === f.pack?.id}
                   onClick={() => f.setPack(p)}
                 >
-                  {p.count === 6 && <span className="ff-tag">RECOMENDADO</span>}
+                  {p.count === 6 && <span className="ff-tag">{t("RECOMENDADO")}</span>}
                   <strong>{formatMoney(p.cents)}</strong>
                   <b>{p.count} fotos</b>
                   <span>{p.count - 1} novas para criar com as referências que você escolher</span>
@@ -125,8 +127,8 @@ export default function FlowPage() {
         )}
         {f.step === "paid" && (
           <>
-            <div className="ff-notice success">✓ Pagamento confirmado.</div>
-            <h1>Sua primeira foto</h1>
+            <div className="ff-notice success">{t("✓ Pagamento confirmado.")}</div>
+            <h1>{t("Sua primeira foto")}</h1>
             <Photo url={url} />
             <DownloadButton url={url} index={0} onError={f.setError} />
             <p className="ff-sub ff-space">
@@ -140,10 +142,10 @@ export default function FlowPage() {
         )}
         {f.step === "batch" && (
           <>
-            <h1>Escolha as referências</h1>
+            <h1>{t("Escolha as referências")}</h1>
             <p className="ff-sub">Selecione {f.remaining} para criar tudo de uma vez.</p>
             <div className="ff-count">
-              <span>Selecionadas</span>
+              <span>{t("Selecionadas")}</span>
               <b>
                 {f.selected.length} de {f.remaining}
               </b>
@@ -160,7 +162,7 @@ export default function FlowPage() {
         )}
         {f.step === "final" && (
           <>
-            <h1>Seu ensaio completo</h1>
+            <h1>{t("Seu ensaio completo")}</h1>
             <p className="ff-sub">{f.results.length} fotos prontas para baixar.</p>
             <div className="ff-reference-grid">
               {f.results.map((r, i) => (
@@ -184,7 +186,7 @@ export default function FlowPage() {
             {f.error}
           </p>
         )}
-        <div className="ff-mode-label">Modo demonstração</div>
+        <div className="ff-mode-label">{t("Modo demonstração")}</div>
       </div>
     </div>
   );

@@ -1,7 +1,9 @@
+import { useLocale } from '@/context/LocaleContext';
 import React from 'react';
 import { landingAssets } from '@/data/landingAssets';
 
 export function Gallery() {
+ const { t } = useLocale();
   const { row1, row2, row3 } = landingAssets.gallery;
 
   const MarqueeRow = ({ images, direction = 'left', speed = 40 }: { images: string[], direction?: 'left' | 'right', speed?: number }) => (
@@ -24,7 +26,7 @@ export function Gallery() {
             />
             {/* Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-              <span className="text-white font-medium text-sm">Estilo Premium</span>
+              <span className="text-white font-medium text-sm">{t("Estilo Premium")}</span>
             </div>
           </div>
         ))}
@@ -36,10 +38,10 @@ export function Gallery() {
     <section className="py-24 overflow-hidden bg-[#0A0A0F]">
       <div className="container mx-auto px-6 lg:px-8 max-w-7xl mb-12 text-center">
         <h2 className="text-3xl md:text-4xl font-bold text-[#F5F5F7] mb-4">
-          Ensaios criados com o FotoFlow
+          {t("Ensaios criados com o FotoFlow")}
         </h2>
         <p className="text-[#A1A1AA] text-lg max-w-2xl mx-auto">
-          Resultados reais gerados por nossa inteligência artificial a partir de selfies comuns.
+          {t("Resultados reais gerados por nossa inteligência artificial a partir de selfies comuns.")}
         </p>
       </div>
 

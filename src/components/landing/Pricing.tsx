@@ -1,3 +1,4 @@
+import { useLocale } from '@/context/LocaleContext';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
@@ -29,6 +30,7 @@ const plans = [
 ];
 
 export function Pricing() {
+ const { t } = useLocale();
   const navigate = useNavigate();
 
   const handleCTA = (planName: string) => {
@@ -41,10 +43,10 @@ export function Pricing() {
       <div className="container mx-auto px-6 lg:px-8 max-w-7xl">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold text-[#F5F5F7] mb-6">
-            Pague só pelo que baixar
+            {t("Pague só pelo que baixar")}
           </h2>
           <p className="text-[#A1A1AA] text-lg max-w-2xl mx-auto">
-            Criar e visualizar seu ensaio é <strong className="text-white">100% grátis</strong>. Você só paga se gostar do resultado e quiser baixar em alta resolução.
+            {t("Criar e visualizar seu ensaio é")} <strong className="text-white">{t("100% grátis")}</strong>{t(". Você só paga se gostar do resultado e quiser baixar em alta resolução.")}
           </p>
         </div>
 
@@ -64,7 +66,7 @@ export function Pricing() {
             >
               {plan.isPopular && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#8B5CF6] to-[#A855F7] text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">
-                  Mais Escolhido
+                  {t("Mais Escolhido")}
                 </div>
               )}
 
@@ -90,7 +92,7 @@ export function Pricing() {
                     : 'bg-white/5 text-white hover:bg-white/10'
                 }`}
               >
-                Criar meu ensaio
+                {t("Criar meu ensaio")}
               </button>
             </motion.div>
           ))}

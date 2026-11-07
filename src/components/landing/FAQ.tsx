@@ -1,3 +1,4 @@
+import { useLocale } from '@/context/LocaleContext';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
@@ -5,31 +6,32 @@ import { ChevronDown } from 'lucide-react';
 const faqs = [
   {
     question: 'Preciso saber posar?',
-    answer: 'Não! Nossa IA analisa suas selfies e aplica a pose ideal para cada estilo, corrigindo postura, ombros e inclinação do rosto para um resultado perfeitamente natural.'
+    answer: t("Não! Nossa IA analisa suas selfies e aplica a pose ideal para cada estilo, corrigindo postura, ombros e inclinação do rosto para um resultado perfeitamente natural.")
   },
   {
     question: 'Minhas fotos ficam armazenadas?',
-    answer: 'Suas selfies originais são deletadas automaticamente após a geração do ensaio. As fotos finais ficam disponíveis por 30 dias para você baixar, e depois são apagadas.'
+    answer: t("Suas selfies originais são deletadas automaticamente após a geração do ensaio. As fotos finais ficam disponíveis por 30 dias para você baixar, e depois são apagadas.")
   },
   {
     question: 'Quanto tempo demora?',
-    answer: 'O processo todo, desde o envio das selfies até a entrega das fotos em alta resolução, leva em média 2 minutos.'
+    answer: t("O processo todo, desde o envio das selfies até a entrega das fotos em alta resolução, leva em média 2 minutos.")
   },
   {
     question: 'Posso usar comercialmente?',
-    answer: 'Sim! Ao adquirir qualquer pacote, você recebe licença completa para usar as fotos no LinkedIn, site da sua empresa, Instagram, materiais impressos e campanhas.'
+    answer: t("Sim! Ao adquirir qualquer pacote, você recebe licença completa para usar as fotos no LinkedIn, site da sua empresa, Instagram, materiais impressos e campanhas.")
   },
   {
     question: 'E se eu não gostar do resultado?',
-    answer: 'A visualização do ensaio gerado é totalmente gratuita com marca d\'água. Você só paga se gostar do resultado e decidir baixar as fotos em alta resolução.'
+    answer: t("A visualização do ensaio gerado é totalmente gratuita com marca d'água. Você só paga se gostar do resultado e decidir baixar as fotos em alta resolução.")
   },
   {
     question: 'Como recebo as fotos?',
-    answer: 'Assim que o pagamento for aprovado, o download em alta resolução (4K) é liberado imediatamente na própria plataforma, sem complicação.'
+    answer: t("Assim que o pagamento for aprovado, o download em alta resolução (4K) é liberado imediatamente na própria plataforma, sem complicação.")
   }
 ];
 
 export function FAQ() {
+ const { t } = useLocale();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleFAQ = (index: number) => {
@@ -41,7 +43,7 @@ export function FAQ() {
       <div className="container mx-auto px-6 lg:px-8 max-w-3xl">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold text-[#F5F5F7] mb-6">
-            Dúvidas frequentes
+            {t("Dúvidas frequentes")}
           </h2>
         </div>
 

@@ -1,6 +1,8 @@
+import { useLocale } from '@/context/LocaleContext';
 import React from 'react';
 
 export function Footer() {
+ const { t } = useLocale();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -12,9 +14,9 @@ export function Footer() {
           </div>
 
           <div className="flex gap-8">
-            <a href="#" className="text-[#A1A1AA] hover:text-[#F5F5F7] text-sm transition-colors">Termos de Uso</a>
-            <a href="#" className="text-[#A1A1AA] hover:text-[#F5F5F7] text-sm transition-colors">Privacidade</a>
-            <a href="#" className="text-[#A1A1AA] hover:text-[#F5F5F7] text-sm transition-colors">Contato</a>
+            <a href="#" className="text-[#A1A1AA] hover:text-[#F5F5F7] text-sm transition-colors">{t("Termos de Uso")}</a>
+            <a href="#" className="text-[#A1A1AA] hover:text-[#F5F5F7] text-sm transition-colors">{t("Privacidade")}</a>
+            <a href="#" className="text-[#A1A1AA] hover:text-[#F5F5F7] text-sm transition-colors">{t("Contato")}</a>
           </div>
         </div>
 
@@ -23,7 +25,7 @@ export function Footer() {
             © {currentYear} FotoFlow. Todos os direitos reservados.
           </p>
           <p className="text-[#A1A1AA] text-xs">
-            Feito com IA. Para humanos.
+            {t("Feito com IA. Para humanos.")}
           </p>
         </div>
       </div>

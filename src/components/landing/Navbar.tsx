@@ -1,3 +1,4 @@
+import { useLocale } from '@/context/LocaleContext';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
@@ -5,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { track } from '@/lib/track';
 
 export function Navbar() {
+ const { t } = useLocale();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -71,7 +73,7 @@ export function Navbar() {
             onClick={handleCTA}
             className="bg-gradient-to-r from-[#8B5CF6] to-[#A855F7] text-white px-6 py-2.5 rounded-full font-medium text-sm hover:shadow-[0_0_20px_rgba(139,92,246,0.4)] transition-all duration-300"
           >
-            Criar meu ensaio
+            {t("Criar meu ensaio")}
           </button>
         </div>
 
@@ -107,7 +109,7 @@ export function Navbar() {
               onClick={handleCTA}
               className="w-full bg-gradient-to-r from-[#8B5CF6] to-[#A855F7] text-white px-6 py-3.5 rounded-xl font-medium text-center"
             >
-              Criar meu ensaio
+              {t("Criar meu ensaio")}
             </button>
           </motion.div>
         )}

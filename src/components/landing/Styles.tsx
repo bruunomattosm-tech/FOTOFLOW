@@ -1,3 +1,4 @@
+import { useLocale } from '@/context/LocaleContext';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
@@ -38,6 +39,7 @@ const stylesList = [
 ];
 
 export function Styles() {
+ const { t } = useLocale();
   const navigate = useNavigate();
 
   const handleSelectStyle = (styleId: string) => {
@@ -55,10 +57,10 @@ export function Styles() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-bold text-[#F5F5F7] mb-6">
-            Escolha o ensaio da sua vida
+            {t("Escolha o ensaio da sua vida")}
           </h2>
           <p className="text-[#A1A1AA] text-lg max-w-2xl mx-auto">
-            Cinco categorias de excelência. Qualidade de estúdio, direção de arte e luz impecável para cada momento.
+            {t("Cinco categorias de excelência. Qualidade de estúdio, direção de arte e luz impecável para cada momento.")}
           </p>
         </motion.div>
 

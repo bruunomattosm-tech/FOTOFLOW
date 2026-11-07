@@ -1,9 +1,11 @@
+import { useLocale } from '@/context/LocaleContext';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { track } from '@/lib/track';
 
 export function CTA() {
+ const { t } = useLocale();
   const navigate = useNavigate();
 
   const handleCTA = () => {
@@ -24,21 +26,21 @@ export function CTA() {
           className="bg-[#14141C] border border-[#8B5CF6]/30 rounded-3xl p-10 md:p-16 text-center shadow-[0_0_50px_rgba(139,92,246,0.1)]"
         >
           <h2 className="text-3xl md:text-5xl font-bold text-[#F5F5F7] mb-6">
-            Sua próxima foto de perfil começa com uma selfie.
+            {t("Sua próxima foto de perfil começa com uma selfie.")}
           </h2>
           <p className="text-[#A1A1AA] text-lg mb-10 max-w-xl mx-auto">
-            Junte-se a mais de 18.000 profissionais que já transformaram sua imagem com o FotoFlow.
+            {t("Junte-se a mais de 18.000 profissionais que já transformaram sua imagem com o FotoFlow.")}
           </p>
 
           <button
             onClick={handleCTA}
             className="w-full sm:w-auto bg-gradient-to-r from-[#8B5CF6] to-[#A855F7] text-white px-10 py-5 rounded-2xl font-semibold text-xl hover:scale-105 hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] transition-all duration-300"
           >
-            Criar meu ensaio agora
+            {t("Criar meu ensaio agora")}
           </button>
 
           <p className="text-sm text-[#A1A1AA] mt-6">
-            Visualização 100% grátis. Você só paga se quiser baixar.
+            {t("Visualização 100% grátis. Você só paga se quiser baixar.")}
           </p>
         </motion.div>
       </div>

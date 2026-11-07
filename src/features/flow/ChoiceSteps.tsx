@@ -1,3 +1,4 @@
+import { useLocale } from '@/context/LocaleContext';
 import { Action, ReferenceGrid } from "../shared/Controls";
 import { STYLES } from "../shared/catalog";
 import type { useFlow } from "./useFlow";
@@ -6,8 +7,8 @@ export function ChoiceSteps({ f, cta }: { f: ReturnType<typeof useFlow>; cta: (t
  return <>
         {f.step === "gender" && (
           <>
-            <h1>Quem vai fazer o ensaio?</h1>
-            <p className="ff-sub">Assim mostramos as referências certas para você.</p>
+            <h1>{t("Quem vai fazer o ensaio?")}</h1>
+            <p className="ff-sub">{t("Assim mostramos as referências certas para você.")}</p>
             <div className="ff-options">
               {(["female", "male"] as const).map((g) => (
                 <Action
@@ -20,8 +21,8 @@ export function ChoiceSteps({ f, cta }: { f: ReturnType<typeof useFlow>; cta: (t
                 >
                   <span className="ff-option-icon">{g === "female" ? "👩" : "👨"}</span>
                   <div>
-                    <b>{g === "female" ? "Mulher" : "Homem"}</b>
-                    <span>Ver estilos {g === "female" ? "femininos" : "masculinos"}</span>
+                    <b>{g === "female" ? t("Mulher") : t("Homem")}</b>
+                    <span>Ver estilos {g === "female" ? t("femininos") : t("masculinos")}</span>
                   </div>
                 </Action>
               ))}
@@ -30,8 +31,8 @@ export function ChoiceSteps({ f, cta }: { f: ReturnType<typeof useFlow>; cta: (t
         )}
         {f.step === "style" && (
           <>
-            <h1>Escolha seu estilo</h1>
-            <p className="ff-sub">Cada estilo tem referências de pose e luz.</p>
+            <h1>{t("Escolha seu estilo")}</h1>
+            <p className="ff-sub">{t("Cada estilo tem referências de pose e luz.")}</p>
             <div className="ff-options">
               {STYLES.map((s) => (
                 <Action
@@ -56,9 +57,9 @@ export function ChoiceSteps({ f, cta }: { f: ReturnType<typeof useFlow>; cta: (t
         {f.step === "refs" && (
           <>
             <h1>{STYLES.find((s) => s.id === f.style)?.title}</h1>
-            <p className="ff-sub">Toque na referência que mais combina com você.</p>
+            <p className="ff-sub">{t("Toque na referência que mais combina com você.")}</p>
             <ReferenceGrid refs={f.refs} selected={[f.referenceId]} onSelect={f.setReferenceId} />
-            {!f.refs.length && <p className="ff-sub">Nenhuma referência ativa neste estilo.</p>}
+            {!f.refs.length && <p className="ff-sub">{t("Nenhuma referência ativa neste estilo.")}</p>}
             {cta("Usar esta referência", () => f.go("capture"), !f.referenceId)}
           </>
         )}
