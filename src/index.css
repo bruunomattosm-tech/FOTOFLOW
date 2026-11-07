@@ -11,6 +11,11 @@
 }
 
 :root {
+  --selector-surface: #141020;
+  --selector-active: #1b1430;
+  --selector-text: #f5f2fb;
+  --selector-muted: #9a92b0;
+  --selector-border: #2a2240;
   --background: 240 10% 4%;
   --foreground: 0 0% 98%;
   --card: 240 10% 7%;
@@ -36,4 +41,24 @@
 body {
   background-color: #0A0A0F;
   color: #F5F5F7;
+}
+
+.ff-select-trigger,
+.ff-select-menu,
+.ff-select-item {
+  background-color: var(--selector-surface);
+  color: var(--selector-text);
+  border-color: var(--selector-border);
+  opacity: 1;
+}
+.ff-select-trigger:hover,
+.ff-select-trigger[data-state="open"],
+.ff-select-item[data-highlighted],
+.ff-select-item[data-state="checked"] {
+  background-color: var(--selector-active);
+  color: var(--selector-text);
+}
+.ff-select-trigger:disabled,
+.ff-select-item[data-disabled] {
+  color: var(--selector-muted);
 }
