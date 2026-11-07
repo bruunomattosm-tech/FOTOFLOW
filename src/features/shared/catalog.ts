@@ -1,4 +1,13 @@
 import type { BusinessSettings, FlowReference, Gender, StyleId } from './types';
+import corpFemale from '@/assets/reference-corp-female.jpg';
+import corpMale from '@/assets/reference-corp-male.jpg';
+import anivFemale from '@/assets/reference-aniv-female.jpg';
+import anivMale from '@/assets/reference-aniv-male.jpg';
+import lifeFemale from '@/assets/reference-life-female.jpg';
+import lifeMale from '@/assets/reference-life-male.jpg';
+import petFemale from '@/assets/reference-pet-female.jpg';
+import petMale from '@/assets/reference-pet-male.jpg';
+const portraits = { corp: { female:corpFemale,male:corpMale }, aniv: { female:anivFemale,male:anivMale }, life: { female:lifeFemale,male:lifeMale }, pet: { female:petFemale,male:petMale } };
 export const STEPS = ['gender','style','refs','capture','lead','gen','result','pack','pix','paid','batch','gen2','final'] as const;
 export const STYLES: { id: StyleId; title: string; short: string; description: string; icon: string }[] = [
   { id: 'corp', title: 'Ensaio Corporativo', short: 'Corporativo', description: 'Perfil profissional, LinkedIn, currículo', icon: '💼' },
@@ -25,4 +34,4 @@ export const formatMoney = (cents: number) => (cents / 100).toLocaleString('pt-B
 export const styleName = (id: StyleId) => STYLES.find(s => s.id === id)?.short || 'Corporativo';
 export const makeReferences = (): FlowReference[] => STYLES.flatMap(style => (['female','male'] as Gender[]).flatMap(gender =>
   Array.from({ length: 10 }, (_, i) => ({ id: `${style.id}-${gender}-${i}`, code: `#${style.id.toUpperCase()}-${gender === 'male' ? 'H' : 'M'}-${String(i * 7 + 3).padStart(3,'0')}`,
-    style: style.id, gender, image: `/assets/aistudio/${['image_43610175.png','image_7ab70e2f.png','image_7c340c12.png','image_a2714acf.png'][i % 4]}`, active: true, choices: 0 }))));
+    style: style.id, gender, image: portraits[style.id][gender], active: true, choices: 0 }))));
