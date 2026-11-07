@@ -56,3 +56,10 @@ Ambos os comandos devem passar com zero erros (`exit code 0`).
 - Keep the React Router landing at `/`, the modular client flow at `/app`, and CRM at `/crm`; keep the original Studio available at `/studio` to preserve existing AI controls and master prompts.
 - Route prototype reads and writes through `apiService.prototype`; this is explicitly mock-only browser persistence, not production administration or payment infrastructure.
 - Keep converted flow and CRM modules under 200 lines and use scoped semantic theme tokens so the existing landing remains unchanged.
+
+## International operation
+- Centralize country/locale/currency rules in i18n and LocaleContext; use query-based switching without reloading so the demo flow survives selection.
+- Keep local payment/tracking configuration behind apiService.prototype; do not treat browser persistence as secure production configuration.
+- Consolidate revenue only with explicit country-to-BRL rates; preserve original amounts and currency for orders.
+- Route funnel reporting through track.ts with purpose-specific permission and non-identifying allowlisted payloads; mock payment confirmations never reach ad providers.
+- Keep private gateway and Events API credentials server-only; incomplete integrations must show pending rather than successful receipt.

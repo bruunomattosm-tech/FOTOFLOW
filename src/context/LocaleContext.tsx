@@ -5,7 +5,7 @@ interface LocaleValue { country: Country; locale: typeof LOCALES[Country]; setCo
 const LocaleContext = createContext<LocaleValue | undefined>(undefined);
 export function LocaleProvider({ children }: { children: ReactNode }) {
   const [country, update] = useState<Country>(() => detectCountry(location.hostname, location.search));
-  const setCountry = (next: Country) => { const url = new URL(location.href); url.searchParams.set('country', next); url.searchParams.delete('lang'); location.assign(url.pathname + url.search + url.hash); };
+  const setCountry = (next: Country) => { const url = new URL(location.href); url.searchParams.set('country', next); url.searchParams.delete('lang'); history.replaceState(null, "", url.pathname + url.search + url.hash); update(next); };
   useEffect(() => { document.documentElement.lang = LOCALES[country].language; const onHistory = () => update(detectCountry(location.hostname, location.search)); window.addEventListener('popstate', onHistory); return () => window.removeEventListener('popstate', onHistory); }, [country]);
   const value = useMemo(() => ({ country, locale: LOCALES[country], setCountry, t: (text: string) => translate(text, country) }), [country]);
   return <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>;

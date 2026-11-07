@@ -44,7 +44,7 @@ export function Hero() {
             </div>
 
             <h1 className="text-5xl md:text-6xl lg:text-[68px] font-bold text-[#F5F5F7] leading-[1.1] tracking-[-0.03em] mb-6">
-              Seu ensaio profissional.{' '}
+              {t('Seu ensaio profissional.')} {' '}
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#8B5CF6] to-[#A855F7]">
                 {t("Sem estúdio, sem fotógrafo, sem espera.")}
               </span>

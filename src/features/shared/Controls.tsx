@@ -48,14 +48,16 @@ export function ReferenceGrid({
 export function Toggle({
   checked,
   onChange,
-  label,
+  label, disabled = false,
 }: {
+  disabled?: boolean;
   checked: boolean;
   onChange: () => void;
   label: string;
 }) {
   return (
     <Action
+      disabled={disabled}
       role="switch"
       aria-label={label}
       aria-checked={checked}

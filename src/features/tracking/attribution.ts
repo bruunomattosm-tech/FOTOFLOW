@@ -1,4 +1,4 @@
-import { canTrack } from '@/lib/consent';
+import { canTrack, onConsentChange } from '@/lib/consent';
 import { matchingAllowed } from './consentEvidence';
 import { internationalPhone, type Country } from '@/lib/i18n';
 const keys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','ttp','gclid','_fbc','_fbp'] as const;
@@ -16,3 +16,5 @@ export async function hashLead(lead: { email: string; phone: string; name: strin
   const hash = async (value: string) => Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value)))).map(b => b.toString(16).padStart(2,'0')).join('');
   return { em: await hash(lead.email.trim().toLowerCase()), ph: await hash(internationalPhone(lead.phone, country)), fn: await hash(lead.name.trim().toLowerCase().split(/\s+/)[0] || '') };
 }
+
+onConsentChange(() => { void canTrack('advertising').then(allowed => { if (!allowed) localStorage.removeItem('fotoflow_attribution'); }); });

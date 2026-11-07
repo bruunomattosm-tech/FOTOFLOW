@@ -41,7 +41,7 @@ export default function FlowPage() {
     <div className="ff-theme ff-flow">
       <div className="ff-flow-inner">
         <header className="ff-flow-header">
-          <a href="/" className="ff-logo">
+          <a href={"/" + location.search} className="ff-logo">
             <Sparkles size={18} />
             FotoFlow
           </a>

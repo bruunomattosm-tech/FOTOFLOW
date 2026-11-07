@@ -30,6 +30,7 @@ export function useFlow() {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const refs = data.references.filter((r) => r.style === style && r.gender === gender && r.active);
+  useEffect(() => { setPack(undefined); setOrderId(""); if (["pix", "paid", "batch", "gen2", "final"].includes(step)) setStep("pack"); }, [country]);
   const go = (next: FlowStep) => {
     setError("");
     setStep(next);
